@@ -18,6 +18,6 @@
 
 お気軽に参加して交流や質問をしてみてください。
 
-https://discord.gg/9ebCWeM
+招待リンク: https://discord.gg/9ebCWeM
 
 ※Discordについては[こちら](https://discord.com/)
