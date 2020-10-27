@@ -5,8 +5,7 @@ class TCPServer:
     """
     TCP通信を行うサーバーを表すクラス
     """
-    @staticmethod
-    def serve():
+    def serve(self):
         """
         サーバーを起動する
         """
@@ -42,4 +41,5 @@ class TCPServer:
 
 
 if __name__ == '__main__':
-    TCPServer.serve()
+    server = TCPServer()
+    server.serve()
