@@ -2,8 +2,15 @@ import socket
 
 
 class TCPServer:
+    """
+    TCP通信を行うサーバーを表すクラス
+    """
     @staticmethod
     def serve():
+        """
+        サーバーを起動する
+        """
+
         print("=== Serverを起動します ===")
 
         try:
