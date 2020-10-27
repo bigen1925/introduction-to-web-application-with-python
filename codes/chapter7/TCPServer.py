@@ -31,7 +31,7 @@ class TCPServer:
             client_socket.close()
 
         finally:
-            print("=== Serverを終了します。 ===")
+            print("=== Serverを停止します。 ===")
 
 
 if __name__ == '__main__':
