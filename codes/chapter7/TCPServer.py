@@ -4,7 +4,7 @@ import socket
 class TCPServer:
     @staticmethod
     def serve():
-        print("=== TCPServerを起動します ===")
+        print("=== Serverを起動します ===")
 
         try:
             # socketを生成
@@ -31,7 +31,7 @@ class TCPServer:
             client_socket.close()
 
         finally:
-            print("=== TCPServerを終了します。 ===")
+            print("=== Serverを終了します。 ===")
 
 
 if __name__ == '__main__':
