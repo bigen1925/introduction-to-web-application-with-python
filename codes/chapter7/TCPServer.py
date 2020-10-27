@@ -26,7 +26,7 @@ class TCPServer:
             (client_socket, address) = server_socket.accept()
             print(f"=== クライアントとの接続が完了しました remote_address: {address} ===")
 
-            # クライアントから送られてきたデータを最大4096バイト取得する
+            # クライアントから送られてきたデータを取得する
             request = client_socket.recv(4096)
 
             # クライアントから送られてきたデータをファイルに書き出す
