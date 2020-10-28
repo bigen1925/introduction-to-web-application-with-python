@@ -1,3 +1,4 @@
 .idea
 __pychache__
 server_recv.txt
+client_recv.txt
