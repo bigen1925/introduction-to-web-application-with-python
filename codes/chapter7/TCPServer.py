@@ -10,7 +10,7 @@ class TCPServer:
         サーバーを起動する
         """
 
-        print("=== Serverを起動します ===")
+        print("=== サーバーを起動します ===")
 
         try:
             # socketを生成
@@ -37,7 +37,7 @@ class TCPServer:
             client_socket.close()
 
         finally:
-            print("=== Serverを停止します。 ===")
+            print("=== サーバーを停止します。 ===")
 
 
 if __name__ == '__main__':
