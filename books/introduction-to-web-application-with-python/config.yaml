@@ -20,7 +20,7 @@ summary: |
   TBW
 
 topics: ["python", "web", "socket", "http", "tcp"] # トピック（5つまで）
-published: false
+published: true
 price: 0
 chapters:
   - preface.md
