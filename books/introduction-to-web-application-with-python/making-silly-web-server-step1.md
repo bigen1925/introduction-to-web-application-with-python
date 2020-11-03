@@ -118,7 +118,7 @@ Webサービスは抽象的な言葉で、手にとって「どうぞ」と渡�
 `query`: 追加の情報
 
 例）
-- `https://zenn.dev/bigen1925/books/e6c9492a82f5e2e10fca`
+- `https://zenn.dev/bigen1925/books/introduction-to-web-application-with-python`
 - `http://132.45.33.111:2300/foo/bar?name=bigen1925`
 - `http://localhost/`
 

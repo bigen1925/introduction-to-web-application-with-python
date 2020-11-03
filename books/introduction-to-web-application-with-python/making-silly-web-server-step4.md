@@ -166,7 +166,7 @@ $ python TCPServer.py
 
 # == 現在、本書はここまでとなります ==
 現在、本書はここまでとなります。続編は鋭意執筆中ですので、少々お待ちください。
-更新履歴は[こちら](https://zenn.dev/bigen1925/books/e6c9492a82f5e2e10fca/viewer/9e7777#change-log)よりご確認ください。
+更新履歴は[こちら](https://zenn.dev/bigen1925/books/introduction-to-web-application-with-python/viewer/introduction#change-log)よりご確認ください。
 
 また、本書の執筆は、読者の皆様のフィードバックにより加速したり減速したりします。
 フィードバックはあればあるほど、良い評価であれ悪い評価であれ、執筆は加速します。
