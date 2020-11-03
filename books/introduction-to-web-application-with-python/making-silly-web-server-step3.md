@@ -72,7 +72,7 @@ if __name__ == '__main__':
     client = TCPClient()
     client.request()
 ```
-https://github.com/bigen1925/python_web_application_for_3rd_year_engineer/blob/main/codes/chapter7/TCPClient.py
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter7/TCPClient.py
 
 また、新しく`study/client_send.txt`というファイルを新しく作成してください。
 そしてSTEP2で生成した、ブラウザからのリクエストを記録した`study/server_recv.txt`の内容をまるっとコピーしてください。

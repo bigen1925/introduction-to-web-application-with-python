@@ -76,7 +76,7 @@ if __name__ == '__main__':
     server = TCPServer()
     server.serve()
 ```
-https://github.com/bigen1925/python_web_application_for_3rd_year_engineer/blob/main/codes/chapter8/TCPServer.py
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter8/TCPServer.py
 
 変わったのは36~41行目です。
 ::: messages

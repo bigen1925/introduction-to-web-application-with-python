@@ -56,7 +56,7 @@ Apacheのインストール等ではOSによって手順が変わるとは思い
 そういった各OSごとの手順を網羅して紹介することも可能ですが、こういうものはすぐに古くなってしまいますので、本書では極力紹介しない方針で進めていきます。
 （MacOSの手順ですら省略するかもしれません。）
 
-手順が分からなければ、お気軽に[サポートサイト](https://github.com/bigen1925/python_web_application_for_3rd_year_engineer)からお問い合わせください。
+手順が分からなければ、お気軽に[サポートサイト](https://github.com/bigen1925/introduction-to-web-application-with-python)からお問い合わせください。
 
 ## Pythonについて
 Pythonのバージョンには気をつけてください。
@@ -73,7 +73,7 @@ Python 3.8.2+
 
 特定のOSでうごかないライブラリ等は使用しませんが、ファイルパスの処理などは適宜読み替えて動かしていただく必要があるかもしれません。
 
-手順が分からなければ、お気軽に[サポートサイト](https://github.com/bigen1925/python_web_application_for_3rd_year_engineer)からお問い合わせください。
+手順が分からなければ、お気軽に[サポートサイト](https://github.com/bigen1925/introduction-to-web-application-with-python)からお問い合わせください。
 
 ## メモリ/CPUについて
 念の為掲載しましたが、本書を進めるにあたってメモリやCPUリソースが問題になることはない想定です。
@@ -81,13 +81,13 @@ Python 3.8.2+
 
 # 本書で扱うソースコードについて
 本書で扱うソースコードはすべて
-https://github.com/bigen1925/python_web_application_for_3rd_year_engineer
+https://github.com/bigen1925/introduction-to-web-application-with-python
 こちらに掲載しています。
 
 ソースコードの転載、引用、改変は無償かつ無制限、無許諾にて行って構いませんが、それらを不特定多数へ公開する場合は出典の明記をお願いします。
 
 # 本書内容の不明点について
-[上記リポジトリ](https://github.com/bigen1925/python_web_application_for_3rd_year_engineer)にて、`question`ラベルのissueを作成していただくか、下記の筆者連絡先までご連絡ください。
+[上記リポジトリ](https://github.com/bigen1925/introduction-to-web-application-with-python)にて、`question`ラベルのissueを作成していただくか、下記の筆者連絡先までご連絡ください。
 
 
 # 筆者について
