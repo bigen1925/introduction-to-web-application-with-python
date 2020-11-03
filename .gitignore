@@ -1,4 +1,12 @@
+# Jet Brains' editor configuration
 .idea
+
+# python cache
 __pychache__
+
+# node packages
+node_modules
+
+# dynamic resources of application
 server_recv.txt
 client_recv.txt
