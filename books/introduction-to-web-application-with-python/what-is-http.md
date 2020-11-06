@@ -293,7 +293,7 @@ Requestは、始めにRequest-Lineが必ず1つあり、
 ```
 最後に省略可能な`message-body`がある、という意味になります。
 
-ちなみに、CRLFは例の改行コードのことですが、[同じドキュメント内の2.2](https://triple-underscore.github.io/rfc-others/RFC2616-ja.html#section-2.2) でしっかりと定められています。
+ちなみに、CRLFは改行コードのことですが、[同じドキュメント内の2.2](https://triple-underscore.github.io/rfc-others/RFC2616-ja.html#section-2.2) でしっかりと定められています。
 
 （CRLFの説明は割愛します。分からないかたは調べてみてください。）
 
