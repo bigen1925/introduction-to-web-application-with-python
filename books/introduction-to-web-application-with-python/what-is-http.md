@@ -356,7 +356,7 @@ Accept-Language: ja-JP,ja;q=0.9,en-US;q=0.8,en;q=0.7
 
 一例として、*Chrome => Apache*のリクエストの代わりに、筆者がGithubでプルリクエストのbase_branchを変更した際のリクエストを記載しておきます。
 
-```
+```http
 POST /bigen1925/test/pull/1/change_base HTTP/1.1
 Host: github.com
 Connection: keep-alive
@@ -384,7 +384,7 @@ HTTPリクエストに関する概説は以上になります。
 次は**HTTPレスポンス**ですが、こちらも先に前章までに取得した *Apache => Chrome*のレスポンスを例として見ておきましょう。
 
 **Apache => Chrome**
-```
+```http
 HTTP/1.1 200 OK
 Date: Wed, 28 Oct 2020 07:57:45 GMT
 Server: Apache/2.4.41 (Unix)
@@ -497,7 +497,7 @@ RFCを読んでおくと、「おっかなびっくり適当にやる」ので�
 
 *Apache => Chrome*のレスポンスでいうと下記の部分です
 
-```
+```http
 Date: Wed, 28 Oct 2020 07:57:45 GMT
 Server: Apache/2.4.41 (Unix)
 Content-Location: index.html.en
