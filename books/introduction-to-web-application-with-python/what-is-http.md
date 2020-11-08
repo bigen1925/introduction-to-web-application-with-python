@@ -181,11 +181,11 @@ GET / HTTP/1.1
 
 リクエストラインは、
 ```
-<Method> <Request-URI> <HTTP-Version>
+<method> <request-target> <HTTP-version>
 ```
 という3つの要素で構成されています。
 
-#### 1.1.1 メソッド (Method)
+#### 1.1.1 メソッド (method)
 リクエストメソッドは、リクエストラインの先頭の要素で、**リクエストの種類**を伝えます。
 
 単に情報が欲しいだけ（GET）なのか、逆にフォームの入力情報などを渡したい（POST）のか、などによって変わってきます。
@@ -206,9 +206,9 @@ GET / HTTP/1.1
 
 本書の中で使うのは`GET`と`POST`だけですので、この2つだけ覚えておいてもらえば大丈夫です。
 
-#### 1.1.2 パス (Request-URI)
+#### 1.1.2 リクエスト対象 (request-target)
 
-リクエストラインの2つめの要素はURIというよりはパス(path)とよく呼ばれ、**ドキュメントの場所**を示します。
+リクエストラインの2つめの要素はリクエスト対象というよりはパス(path)とよく呼ばれ、**ドキュメントの場所**を示します。
 
 最近のWebアプリケーションのように動的にレスポンスを生成するようなサービスにおいてはドキュメントの「*場所*を示す」と言ってもいまいちピンとは来ないかもしれませんが、HTTPが開発された当初はディスク内に置かれた特定のファイルを返すだけのような用途で使われることを想定されていたため、ファイルパスのような感覚で今もpathと呼ばれています。
 
@@ -216,7 +216,7 @@ Webアプリケーションにおいては、ファイルパスとして扱う�
 
 例）`/user/profile`という*パス*は、`user`ディレクトリの`profile`というファイルを意味するのではなく、「ユーザーのプロフィールが欲しい」ことを意味する文字列として扱う
 
-#### 1.1.3 バージョン (Http-Version)
+#### 1.1.3 バージョン (Http-version)
 バージョンは、通信の際にクライアントがHTTPのルールのうちどのバージョンのルールに従って通信をしようとしているかを示します。
 
 単にHTTPといっても、時間とともに改善が加えられ、使えるヘッダーが増えたり減ったり少しずつルールは変化しています。
@@ -248,25 +248,23 @@ Webアプリケーションにおいては、ファイルパスとして扱う�
 
 
 さて、1.1の最後として、RFCを見てみましょう。まずはこちらを見てみてください。
-https://triple-underscore.github.io/rfc-others/RFC2616-ja.html#section-5
+https://triple-underscore.github.io/RFC7230-ja.html#section-3
 
-こちらは、RFCの「リクエストとは何か」を定める章です。
-RFCによると、リクエストとは
+こちらは、RFCの「HTTPメッセージとは何か」を定める章です。
+RFCによると、HTTPメッセージとは
 
 ```
-Request       = Request-Line              ; Section 5.1
-                 *(( general-header        ; Section 4.5
-                  | request-header         ; Section 5.3
-                  | entity-header ) CRLF)  ; Section 7.1
+HTTP-message   = start-line
+                 *( header-field CRLF )
                  CRLF
-                 [ message-body ]          ; Section 4.3
+                 [ message-body ]
 ```
 
 であるとされています。
 
-始めはなんのこっちゃらと思うかもしれませんが、この記法は拡張BNF記法と呼ばれ、別のRFCである[RFC 5234](http://www.cam.hi-ho.ne.jp/mendoxi/rfc/rfc5234j.html)で詳しく説明されています。
+始めはなんのこっちゃらと思うかもしれませんが、この記法は拡張BNF記法と呼ばれ、別のRFCである[RFC 5234](http://www.cam.hi-ho.ne.jp/mendoxi/rfc/rfc5234j.html) で詳しく説明されています。
 
-このリクエストを読むのに必要なところだけ説明すると、
+最低限必要なところだけ説明すると、
 - **\*(X)** は、`X`の0回以上の繰り返し（= 全くなくてもよいし、いくらでもたくさんあって良い）がくること
 - **X | Y** は、`X`または`Y`がくること
 - **[X]** は、`X`が省略可能であること (= なくてもよい)
@@ -274,21 +272,19 @@ Request       = Request-Line              ; Section 5.1
 ことを示します。
 つまり、上記の記述を日本語で解釈すると、
 ```
-Request = Request-Line              ; Section 5.1
+HTTP-message   = start-line
 ```
-Requestは、始めにRequest-Lineが必ず1つあり、
+HTTPメッセージは、始めにstart-lineが必ず1つあり、
 ```
-         *(( general-header        ; Section 4.5
-          | request-header         ; Section 5.3
-          | entity-header ) CRLF)  ; Section 7.1
+                 *( header-field CRLF )
 ```
-次に（`general-header`または`request-header`または`entity-header`のどれか1つ　＋　CRLFが1つ）の組み合わせ（つまり1行分のヘッダー）が0個以上あり
+次に（header-field ＋ CRLFが1つ）の組み合わせ（つまり1行分のヘッダー）が0個以上あり
 ```
-         CRLF
+                 CRLF
 ```
 次にCRLFが1つあり
 ```
-        [ message-body ]          ; Section 4.3
+                 [ message-body ]
 ```
 最後に省略可能な`message-body`がある、という意味になります。
 
@@ -296,23 +292,34 @@ Requestは、始めにRequest-Lineが必ず1つあり、
 
 （CRLFの説明は割愛します。分からないかたは調べてみてください。）
 
---------
+次に、[RFC7239 3.1](https://triple-underscore.github.io/RFC7230-ja.html#section-3.1) を見てみると、 
+```
+start-line     = request-line / status-line
+```
+と書かれています。
+つまり、`start-line`（= 1行目）は「リクエストライン」か「ステータスライン」ではなくてはならないと定められています。
 
-こうして読んでみると、RFCも部分的であれば意外と読めることがお分かりいただけると思います。
-また、一口に「ヘッダー」と言っても厳密には`general-header` `request-header` `entity-header`の3種類に分かれていることや、改行コードも厳密には`LF`ではなく`CRLF`を使わないといけないことが分かります。
-
-次に、[RFC7239 3.1.1](https://triple-underscore.github.io/RFC7230-ja.html#section-3.1.1) のリクエストラインの章も見てみましょう。
+また、[RFC7239 3.1.1](https://triple-underscore.github.io/RFC7230-ja.html#section-3.1.1) を見てみると、
 
 ```
-Request-Line   = Method SP  Request-URI SP HTTP-Version CRLF
+request-line   = method SP request-target SP HTTP-version CRLF
 ```
-こっちのほうが随分わかりやすいですね。
+
+と書かれています。
+
 `SP`というのは、また[RFC7230 1.2](https://triple-underscore.github.io/RFC7230-ja.html#section-1.2) を見てみると半角スペースのことであると定められています。
 （日本語訳ページではHTTP共通ページへリンクされていますので、リンク先を参照してください）
 
-メソッド/パス/バージョンを区切るのは、厳密に半角スペースでならないことも、これで分かります。
+この辺りだけかいつまんで読んでみると、単に本書で説明してきたことが書かれているだけで、それほど難しくないと感じるのではないでしょうか？
 
-ね？面白いでしょ？
+その上、RFCを読んでみることで、
+- HTTPメッセージの改行コードは厳密にはLFではなくCRLFでないといけない
+- リクエストラインの区切り文字は厳密には半角スペースでないといけない
+
+ということも分かります。面白いですね。
+
+詳しく調べたいときにはRFCをちょっとだけ読んでみようかな、という気になっていただけていれば、筆者の狙いは成功です。
+ 
  
 ### 1.2 リクエストヘッダー
 **リクエストヘッダー**は、*HTTPリクエストの2行目〜空行*に書かれ、補助的な情報を伝える目的で使われます。
