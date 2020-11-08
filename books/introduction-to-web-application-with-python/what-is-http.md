@@ -105,9 +105,10 @@ IETFという団体はHTTP以外にもたくさんのインターネット技術
 
 RFCはネット上で簡単に検索することができ、誰でも読むことができます。
 
-例えば、RFCの中でもHTTPの基本について書かれた `RFC2616` は、[こちら](https://tools.ietf.org/html/rfc2616) から読むことが出来ます。 
+HTTP/1.1（本書で取り扱うHTTP）のルールについては、 `RFC 7230`, `RFC 7231`, `RFC 7232`, `RFC 7233`, `RFC 7234`, `RFC 7235`という6つのドキュメントに分割されて定義されています。
+例えば、その中でもHTTPの基本について書かれた `RFC7230` は、[こちら](https://tools.ietf.org/html/rfc7230) から読むことが出来ます。 
 
-この`RFC2616`にHTTPの全容が書かれていますので、こちらを読んで勉強しましょう。
+これらのRFCにHTTPの全容が書かれていますので、こちらを読んで勉強しましょう。
 
 ----
 
@@ -125,9 +126,7 @@ RFCに限らず、フレームワークやライブラリの使い方を調べ�
 ですので、以下ではまず私の言葉でHTTPの概要を説明しつつ、折に触れてRFCの該当の箇所もついでに読んでみる、というスタイルで解説を進めていきます。
 
 また、RFCを参照する際は、簡単のために原文ではなく、下記の日本語訳サイトを利用します。
-https://triple-underscore.github.io/rfc-others/RFC2616-ja.html
-
-橋本英彦さん、ありがとうございます。
+https://triple-underscore.github.io/RFC7230-ja.html
 
 # HTTPにおける2種類のメッセージ
 
@@ -265,7 +264,7 @@ Request       = Request-Line              ; Section 5.1
 
 であるとされています。
 
-始めはなんのこっちゃらと思うかもしれませんが、この記法は拡張BNF記法と呼ばれ、[同じドキュメント内の2.1](https://triple-underscore.github.io/rfc-others/RFC2616-ja.html#section-2.1)で詳しく説明されています。
+始めはなんのこっちゃらと思うかもしれませんが、この記法は拡張BNF記法と呼ばれ、別のRFCである[RFC 5234](http://www.cam.hi-ho.ne.jp/mendoxi/rfc/rfc5234j.html)で詳しく説明されています。
 
 このリクエストを読むのに必要なところだけ説明すると、
 - **\*(X)** は、`X`の0回以上の繰り返し（= 全くなくてもよいし、いくらでもたくさんあって良い）がくること
@@ -302,13 +301,15 @@ Requestは、始めにRequest-Lineが必ず1つあり、
 こうして読んでみると、RFCも部分的であれば意外と読めることがお分かりいただけると思います。
 また、一口に「ヘッダー」と言っても厳密には`general-header` `request-header` `entity-header`の3種類に分かれていることや、改行コードも厳密には`LF`ではなく`CRLF`を使わないといけないことが分かります。
 
-次に、[5.1 リクエストライン](https://triple-underscore.github.io/rfc-others/RFC2616-ja.html#section-5.1)の章も見てみましょう。
+次に、[RFC7239 3.1.1](https://triple-underscore.github.io/RFC7230-ja.html#section-3.1.1) のリクエストラインの章も見てみましょう。
 
 ```
 Request-Line   = Method SP  Request-URI SP HTTP-Version CRLF
 ```
 こっちのほうが随分わかりやすいですね。
-`SP`というのは、また[同じドキュメント内の2.2](https://triple-underscore.github.io/rfc-others/RFC2616-ja.html#section-2.2) を見てみると半角スペースのことであると定められています。
+`SP`というのは、また[RFC7230 1.2](https://triple-underscore.github.io/RFC7230-ja.html#section-1.2) を見てみると半角スペースのことであると定められています。
+（日本語訳ページではHTTP共通ページへリンクされていますので、リンク先を参照してください）
+
 メソッド/パス/バージョンを区切るのは、厳密に半角スペースでならないことも、これで分かります。
 
 ね？面白いでしょ？
@@ -344,7 +345,7 @@ Accept-Language: ja-JP,ja;q=0.9,en-US;q=0.8,en;q=0.7
 
 使えるヘッダーの種類も決められてはいますが、数が多いので必要になったときに必要なものだけ覚えるので構いません。
 
-ちなみに、[RFC2616の4.2](https://triple-underscore.github.io/rfc-others/RFC2616-ja.html#section-4.2) によるとコロン(`:`)の後ろのスペースはいくらでも入れてよいが、**半角スペース1つだけにしておくのが好ましい**とされています。
+ちなみに、[RFC7230 3.2](https://triple-underscore.github.io/RFC7230-ja.html#section-3.2) によるとコロン(`:`)の後ろのスペースは`OWS`（＝いくらでも入れてよいが、**半角スペース1つだけにしておくのが好ましい**）とされています。
 
  
 ### 1.3 リクエストボディ
@@ -448,7 +449,7 @@ Webサーバー側が、「今から返事するけど、このバージョン�
 - **404**: リクエストされたパスにドキュメントが見つからなかったことを示す
 - **500**: リクエストを処理している最中に、Webサーバー内で予期せぬエラーが発生したことを示す
 
-その他、完全なステータスコードの定義は[RFC2616](https://triple-underscore.github.io/rfc-others/RFC2616-ja.html#section-10) で定義されています。
+その他、仕様可能な全てのステータスコードの定義は[RFC7231 6.1](https://triple-underscore.github.io/RFC7231-ja.html#section-6.1) で定義されています。
 
 本書では、必要になるステータスコードは都度説明しますので、*ステータスコードを暗記する必要はありません*。
 
