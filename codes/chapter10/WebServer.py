@@ -2,9 +2,9 @@ import socket
 from datetime import datetime
 
 
-class TCPServer:
+class WebServer:
     """
-    TCP通信を行うサーバーを表すクラス
+    Webサーバーを表すクラス
     """
     def serve(self):
         """
@@ -59,5 +59,5 @@ class TCPServer:
 
 
 if __name__ == '__main__':
-    server = TCPServer()
+    server = WebServer()
     server.serve()
