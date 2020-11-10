@@ -281,7 +281,6 @@ RFC: https://triple-underscore.github.io/RFC7231-ja.html#header.content-type
 
 **`study/WebServer.py`** (旧: `study/TCPServer.py`)
 ```python
-import os
 import socket
 from datetime import datetime
 
@@ -290,11 +289,6 @@ class WebServer:
     """
     Webサーバーを表すクラス
     """
-    # 実行ファイルのあるディレクトリ
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    # 静的配信するファイルを置くディレクトリ
-    DOCUMENT_ROOT = os.path.join(BASE_DIR, "static")
-
     def serve(self):
         """
         サーバーを起動する
@@ -323,28 +317,11 @@ class WebServer:
             with open("server_recv.txt", "wb") as f:
                 f.write(request)
 
-            # リクエスト全体を
-            # 1. リクエストライン(1行目)
-            # 2. リクエストボディ(2行目〜空行)
-            # 3. リクエストボディ(空行〜)
-            # にパースする
-            request_line, remain = request.split(b"\r\n", maxsplit=1)
-            request_headers, request_body = remain.split(b"\r\n\r\n", maxsplit=1)
+            # レスポンスボディを生成
+            response_body = "<html><body><h1>It works!</h1></body></html>"
 
-            # リクエストラインをパースする
-            method, path, http_version = request_line.decode().split(" ")
-
-            # pathの先頭の/を削除し、相対パスにしておく
-            relative_path = path.lstrip("/")
-            # ファイルのpathを取得
-            static_file_path = os.path.join(self.DOCUMENT_ROOT, relative_path)
-
-            # ファイルからレスポンスボディを生成
-            with open(static_file_path, "r") as f:
-                response_body = f.read()
-
-            response_body = '<html><body>Hello, World!</body></html>'
-
+            # レスポンスラインを生成
+            response_line = "HTTP/1.1 200 OK\r\n"
             # レスポンスヘッダーを生成
             response_header = ""
             response_header += f"Date: {datetime.utcnow().strftime('%a, %d %b %Y %H:%M:%S GMT')}\r\n"
@@ -353,11 +330,8 @@ class WebServer:
             response_header += "Connection: Close\r\n"
             response_header += "Content-Type: text/html\r\n"
 
-            # レスポンス全体を生成する
-            response = (response_header + "\r\n" + response_body).encode()
-
-            print("::: response :::")
-            print(response.decode())
+            # ヘッダーとボディを空行でくっつけた上でbytesに変換し、レスポンス全体を生成する
+            response = (response_line + response_header + "\r\n" + response_body).encode()
 
             # クライアントへレスポンスを送信する
             client_socket.send(response)
@@ -396,13 +370,11 @@ if __name__ == '__main__':
 変更があったのは、37行目-46行目で、以前はファイルからレスポンスを取得していた箇所をPythonで生成するようにしました。
 
 ```python
-
-            # レスポンスラインを生成
-            response_line = "200 OK\r\n"
-
             # レスポンスボディを生成
             response_body = "<html><body><h1>It works!</h1></body></html>"
 
+            # レスポンスラインを生成
+            response_line = "200 OK\r\n"
             # レスポンスヘッダーを生成
             response_header = ""
             response_header += f"Date: {datetime.utcnow().strftime('%a, %d %b %Y %H:%M:%S GMT')}\r\n"
@@ -410,10 +382,6 @@ if __name__ == '__main__':
             response_header += f"Content-Length: {len(response_body.encode())}\r\n"
             response_header += "Connection: Close\r\n"
             response_header += "Content-Type: text/html\r\n"
-
-            # ヘッダーとボディを空行でくっつけた上でbytesに変換し、レスポンス全体を生成する
-            response = (response_line + response_header + "\r\n" + response_body).encode()
-
 ```
 
 本書の読者には特に説明は不要でしょう。

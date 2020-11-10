@@ -34,12 +34,11 @@ class WebServer:
             with open("server_recv.txt", "wb") as f:
                 f.write(request)
 
-            # レスポンスラインを生成
-            response_line = "200 OK\r\n"
-
             # レスポンスボディを生成
             response_body = "<html><body><h1>It works!</h1></body></html>"
 
+            # レスポンスラインを生成
+            response_line = "HTTP/1.1 200 OK\r\n"
             # レスポンスヘッダーを生成
             response_header = ""
             response_header += f"Date: {datetime.utcnow().strftime('%a, %d %b %Y %H:%M:%S GMT')}\r\n"
