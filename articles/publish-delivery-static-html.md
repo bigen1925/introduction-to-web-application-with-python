@@ -8,7 +8,7 @@ published: true
 
 # 本を更新しました
 
-[チャプター「HTMLファイルを配信できるようにする」](https://zenn.dev/bigen1925/books/introduction-to-web-application-with-python/viewer/delivary-static-html) を更新しました。
+[チャプター「HTMLファイルを配信できるようにする」](https://zenn.dev/bigen1925/books/introduction-to-web-application-with-python/viewer/delivery-static-html) を更新しました。
 
 続きを読みたい方は、ぜひBookの「いいね」か「筆者フォロー」をお願いします ;-)
 
@@ -118,4 +118,4 @@ pathを取得したあと`DOCUMENT_ROOT`と結合して`static_file_path`を取�
 
 # 続きはBookで！
 
-[チャプター「HTMLファイルを配信できるようにする」](https://zenn.dev/bigen1925/books/introduction-to-web-application-with-python/viewer/delivary-static-html)
+[チャプター「HTMLファイルを配信できるようにする」](https://zenn.dev/bigen1925/books/introduction-to-web-application-with-python/viewer/delivery-static-html)
