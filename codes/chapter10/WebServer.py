@@ -34,6 +34,9 @@ class WebServer:
             with open("server_recv.txt", "wb") as f:
                 f.write(request)
 
+            # レスポンスラインを生成
+            response_line = "200 OK\r\n"
+
             # レスポンスボディを生成
             response_body = "<html><body><h1>It works!</h1></body></html>"
 
@@ -46,7 +49,7 @@ class WebServer:
             response_header += "Content-Type: text/html\r\n"
 
             # ヘッダーとボディを空行でくっつけた上でbytesに変換し、レスポンス全体を生成する
-            response = (response_header + "\r\n" + response_body).encode()
+            response = (response_line + response_header + "\r\n" + response_body).encode()
 
             # クライアントへレスポンスを送信する
             client_socket.send(response)
