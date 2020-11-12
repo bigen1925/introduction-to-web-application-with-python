@@ -16,13 +16,9 @@ class WebServer:
     # 拡張子とMIME Typeの対応
     MIME_TYPES = {
         "html": "text/html",
-        "htm": "text/html",
-        "txt": "text/plain",
         "css": "text/css",
-        "js": "application/javascript",
         "png": "image/png",
         "jpg": "image/jpg",
-        "jpeg": "image/jpg",
         "gif": "image/gif",
     }
 
@@ -93,7 +89,7 @@ class WebServer:
                         ext = ""
                     # 拡張子からMIME Typeを取得
                     # 知らない対応していない拡張子の場合はoctet-streamとする
-                    content_type = self.MIME_TYPES.get(ext, "application/octet-stream")
+                    mime_type = self.MIME_TYPES.get(ext, "application/octet-stream")
 
                     # レスポンスヘッダーを生成
                     response_header = ""
@@ -101,7 +97,7 @@ class WebServer:
                     response_header += "Host: HenaServer/0.1\r\n"
                     response_header += f"Content-Length: {len(response_body)}\r\n"
                     response_header += "Connection: Close\r\n"
-                    response_header += f"Content-Type: {content_type}\r\n"
+                    response_header += f"Content-Type: {mime_type}\r\n"
 
                     # レスポンス全体を生成する
                     response = (response_line + response_header + "\r\n").encode() + response_body
