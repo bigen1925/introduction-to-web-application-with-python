@@ -31,6 +31,7 @@ chapters:
   - what-is-http.md
   - improve-to-minimal-web-server.md
   - delivery-static-html.md
+  - daemonize.md
   - draft1.md
   - draft2.md
   - draft3.md
