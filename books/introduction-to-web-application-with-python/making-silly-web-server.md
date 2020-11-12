@@ -17,7 +17,7 @@ title: "へなちょこWebサーバーを作る"
 
 
 # STEP1: ChromeとApacheで通信してみる
-シェアは減少傾向とはいえ、現在でも世界的によく使われているWebサーバーに`Apache`というものがあります。
+世界的によく使われているWebサーバーの1つに`Apache`というものがあります。
 まずは、このApacheというWebサーバーを自分のPC内で起動して、自分のPC内で起動したブラウザからアクセスしてみることにします。
 
 「自分のマシンで動いているブラウザというプログラム」と、
@@ -30,7 +30,16 @@ title: "へなちょこWebサーバーを作る"
 
 ![](https://storage.googleapis.com/zenn-user-upload/baachuvryp4tm31nji2yvy2kobdr)
 
+:::details なぜApacheを使うか？
+単にWebサーバーというと、`Apache`以外にも色々なプログラムがあります。
 
+有名所ですと、`Nginx`,`IIS`, `Tomcat` などがありますし、各言語ごとの標準ライブラリとして組み込まれているもの（`Node.js`の`http`モジュールや、`Python`の`http`モジュールなど）もあります。
+
+今回実験対象として`Apache`を選んだのは、2020年11月現在も世界的シェアトップ^[https://w3techs.com/technologies/history_overview/web_server] でありながら標準機能がシンプルで、かつMacに標準で搭載されているため教材としては向いていたためです。
+
+興味がある方は、`Apache`の代わりに`Nginx`などを自分のマシンにインストールし、本書の実験を試してみるのも良いかもしれません。
+
+:::
 
 # STEP2: ブラウザと自作サーバーで通信してみる
 「じゃあ早速ChromeとApacheの通信を覗き見て、Apacheの代わりになるような真似っ子Webサーバーを作ってやるぜ！」

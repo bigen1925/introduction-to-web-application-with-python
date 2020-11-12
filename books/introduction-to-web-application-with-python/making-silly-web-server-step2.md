@@ -83,7 +83,7 @@ if __name__ == '__main__':
     server.serve()
 
 ```
-https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter7/TCPServer.py
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter6/TCPServer.py
 
 # 実際に動かしてみる
 説明の前に、まずはこのTCPサーバーを動かしてみましょう。
