@@ -25,9 +25,9 @@ title: "HTMLファイルを配信できるようにする"
 あらかじめ用意したHTMLファイルをレスポンスボディとして返せるように改良したものがこちらです。
 
 :::message
-ソースコードも長くなってきましたので、今回からソースコード全体は転載しないことにします。
+ソースコードも長くなってきましたので、今回から内容が多いソースコードについては全体は転載しないことにします。
 
-各章、Githubにソースコード全体がアップロードされていますので、そちらをご参照ください。
+Githubにソースコード全体がアップロードされていますので、そちらをご参照ください。
 :::
 
 **`study/WebServer.py`**
@@ -85,7 +85,7 @@ HTTPリクエストをパース（分解）して、pathの情報を抜き出し
             static_file_path = os.path.join(self.DOCUMENT_ROOT, relative_path)
 
             # ファイルからレスポンスボディを生成
-            with open(static_file_path, "r") as f:
+            with open(static_file_path, "rb") as f:
                 response_body = f.read()
 ```
 
@@ -141,7 +141,7 @@ Traceback (most recent call last):
   File "/~~~~/WebServer.py", line 88, in <module>
     server.serve()
   File "/~~~~/WebServer.py", line 60, in serve
-    with open(static_file_path, "r") as f:
+    with open(static_file_path, "rb") as f:
 FileNotFoundError: [Errno 2] No such file or directory: '/~~~~/static/hoge.html'
 ```
 
@@ -171,7 +171,7 @@ https://github.com/bigen1925/introduction-to-web-application-with-python/blob/ma
 ```python
             # ファイルからレスポンスボディを生成
             try:
-                with open(static_file_path, "r") as f:
+                with open(static_file_path, "rb") as f:
                     response_body = f.read()
 
                 # レスポンスラインを生成
@@ -179,7 +179,7 @@ https://github.com/bigen1925/introduction-to-web-application-with-python/blob/ma
 
             except OSError:
                 # ファイルが見つからなかった場合は404を返す
-                response_body = "<html><body><h1>404 Not Found</h1></body></html>"
+                response_body = b"<html><body><h1>404 Not Found</h1></body></html>"
                 response_line = "HTTP/1.1 404 Not Found\r\n"
 ```
 `open()`関数は、ファイルが開けない場合には`OSError`例外を送出します。
@@ -214,15 +214,9 @@ Content-Type: text/html
 
 ![](https://storage.googleapis.com/zenn-user-upload/5vlupgqzyy9scjpmxdi0or7d7ojt)
 
+これで、HTMLファイルを配信することができるようになった上に、存在しないファイル名を指定されても異常終了しないWebサーバーとなりました。
+
 どんどんWebサーバーっぽい雰囲気が出てきましたね！
-
-------
-
-雰囲気は出てきたのですが、まだ私達のサーバーは1リクエストを処理するたびに止まってしまい、毎回起動し直さなければなりません。
-
-これでは24時間Webページを提供することができませんし、他にも問題となることがあります。
-
-次章ではこの問題点を解決して、ずっと動きっぱなしで次々とリクエストを処理できるように改良していきます。
 
 
 # == 現在、本書はここまでとなります ==

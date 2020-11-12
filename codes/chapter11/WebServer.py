@@ -57,7 +57,7 @@ class WebServer:
             static_file_path = os.path.join(self.DOCUMENT_ROOT, relative_path)
 
             # ファイルからレスポンスボディを生成
-            with open(static_file_path, "r") as f:
+            with open(static_file_path, "rb") as f:
                 response_body = f.read()
 
             # レスポンスラインを生成
@@ -66,12 +66,12 @@ class WebServer:
             response_header = ""
             response_header += f"Date: {datetime.utcnow().strftime('%a, %d %b %Y %H:%M:%S GMT')}\r\n"
             response_header += "Host: HenaServer/0.1\r\n"
-            response_header += f"Content-Length: {len(response_body.encode())}\r\n"
+            response_header += f"Content-Length: {len(response_body)}\r\n"
             response_header += "Connection: Close\r\n"
             response_header += "Content-Type: text/html\r\n"
 
             # レスポンス全体を生成する
-            response = (response_line + response_header + "\r\n" + response_body).encode()
+            response = (response_line + response_header + "\r\n").encode() + response_body
 
             # クライアントへレスポンスを送信する
             client_socket.send(response)

@@ -101,7 +101,7 @@ HTTPリクエストをパース（分解）して、pathの情報を抜き出し
             static_file_path = os.path.join(self.DOCUMENT_ROOT, relative_path)
 
             # ファイルからレスポンスボディを生成
-            with open(static_file_path, "r") as f:
+            with open(static_file_path, "rb") as f:
                 response_body = f.read()
 ```
 
