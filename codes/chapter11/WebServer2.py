@@ -46,7 +46,7 @@ class WebServer:
             # 3. リクエストボディ(空行〜)
             # にパースする
             request_line, remain = request.split(b"\r\n", maxsplit=1)
-            request_headers, request_body = remain.split(b"\r\n\r\n", maxsplit=1)
+            request_header, request_body = remain.split(b"\r\n\r\n", maxsplit=1)
 
             # リクエストラインをパースする
             method, path, http_version = request_line.decode().split(" ")
