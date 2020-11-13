@@ -32,6 +32,7 @@ chapters:
   - improve-to-minimal-web-server.md
   - delivery-static-html.md
   - daemonize.md
+  - threading.md
   - draft1.md
   - draft2.md
   - draft3.md
