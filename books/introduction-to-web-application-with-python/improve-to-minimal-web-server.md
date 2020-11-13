@@ -186,7 +186,7 @@ RFC: https://triple-underscore.github.io/RFC7232-ja.html#header.etag
 こちらもブラウザや中間サーバーのキャッシュ制御に用いられるものですが、本書ではキャッシュ制御は扱わないためこのヘッダーは**返却しない**ことにします。
 
 ## Accept-Ranges
-```
+```http
 Accept-Ranges: bytes
 ```
 RFC: https://triple-underscore.github.io/RFC7233-ja.html#header.accept-ranges
@@ -408,7 +408,7 @@ if __name__ == '__main__':
 
 動かし方は前回までと同じで、コンソールで`study`ディレクトリまで移動した後、`python WebServer.py`を実行します。
 
-```bash
+```shell
 $ python WebServer.py
 === サーバーを起動します ===
 === クライアントからの接続を待ちます ===

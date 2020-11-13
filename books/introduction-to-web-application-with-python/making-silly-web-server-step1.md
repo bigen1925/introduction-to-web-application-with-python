@@ -28,7 +28,7 @@ MacOSにはApacheが標準でインストールされていますので、特別
 
 ちなみに、`apachectl`はApacheを起動したり終了させたりする為のプログラムで、apache-controlから来ています。
 
-```
+```shell
 $ apachectl -v
 Server version: Apache/2.4.41 (Unix)
 Server built:   Jun  5 2020 23:42:06
@@ -41,7 +41,7 @@ Server built:   Jun  5 2020 23:42:06
 ですが、apacheの起動時にはマシンの特別な権限が必要なため、rootユーザーで起動してあげる必要があります。
 rootユーザーとしてコマンドを実行する`sudo`と組み合わせて、`sudo apachectl start`と実行してあげましょう。
 初回はMacユーザーのパスワードを聞かれますので、入力してください。
-```
+```shell
 $ sudo apachectl start
 Password:
 ```
@@ -56,7 +56,7 @@ rootユーザーが実行しているプログラムの中から`httpd`という
 ちなみに、httpdというのはApacheのことです。製品名とプログラム名が違ってややこしいですが、そういうものです。
 
 下記のように、何か1行でも表示されればApacheは起動しています。
-```
+```shell
 $ ps -u root | grep httpd
     0 47333 ??         0:00.25 /usr/sbin/httpd -D FOREGROUND
 ```
@@ -310,14 +310,14 @@ Apacheは一回起動すると、自分で終了させるかPCをシャットダ
 
 Apacheを終了させるには、ターミナルで`sudo apachectl stop`を実行します。
 
-```
+```shell
 $ sudo apachectl stop
 /System/Library/LaunchDaemons/org.apache.httpd.plist: Operation now in progress
 ```
 
 「オペレーション（=終了）は今実行中ですよ」というメッセージが表示されていますが、Apacheはすぐに終了します。
 念の為、apacheが本当に終了しているか確認してみましょう。以前出てきた`ps -u root | grep httpd`をターミナルで実行します
-```
+```shell
 $ ps -u root | grep httpd
 $
 ```

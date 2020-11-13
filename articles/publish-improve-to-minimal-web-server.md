@@ -202,7 +202,7 @@ RFC: https://triple-underscore.github.io/RFC7232-ja.html#header.etag
 こちらもブラウザや中間サーバーのキャッシュ制御に用いられるものですが、本書ではキャッシュ制御は扱わないためこのヘッダーは**返却しない**ことにします。
 
 ## Accept-Ranges
-```
+```http
 Accept-Ranges: bytes
 ```
 RFC: https://triple-underscore.github.io/RFC7233-ja.html#header.accept-ranges

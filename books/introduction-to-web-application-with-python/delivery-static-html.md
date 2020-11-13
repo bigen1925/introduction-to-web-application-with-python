@@ -101,7 +101,7 @@ pathを取得したあと`DOCUMENT_ROOT`と結合して`static_file_path`を取�
 もし不明点があれば、[こちらから](https://github.com/bigen1925/introduction-to-web-application-with-python) お気軽にご質問ください。
 
 まずはこれまで同様、コンソールで`study`ディレクトリまで移動し、サーバーを起動します。
-```bash
+```shell
 $ python WebServer.py
 === サーバーを起動します ===
 === クライアントからの接続を待ちます ===
@@ -131,7 +131,7 @@ $ python WebServer.py
 
 以下のような`FileNotFoundError`のエラーログが出ていると思います。
 
-```bash
+```shell
 $ python WebServer.py
 === サーバーを起動します ===
 === クライアントからの接続を待ちます ===

@@ -91,7 +91,7 @@ https://github.com/bigen1925/introduction-to-web-application-with-python/blob/ma
 ## TCPサーバーを起動する
 コンソールで`study`ディレクトリまで移動し、`TCPServer.py`を実行します。
 
-```bash
+```shell
 $ python TCPServer.py
 === サーバーを起動します ===
 === クライアントからの接続を待ちます ===
@@ -146,7 +146,7 @@ Accept-Language: ja-JP,ja;q=0.9,en-US;q=0.8,en;q=0.7
 最後に、初めにTCPサーバーを起動したコンソールのタブをもう一度見てみましょう。
 次にような行が追加で出力されていないでしょうか？
 
-```bash
+```shell
 === クライアントとの接続が完了しました remote_address: ('127.0.0.1', 59788) ===
 === サーバーを停止します。 ===
 ```
@@ -395,7 +395,7 @@ socket.setblocking(False)
 
 ### 接続の切断
 最後に、通信の終了のご挨拶です。
-```
+```python
             # 返事は特に返さず、通信を終了させる
             client_socket.close()
 ```

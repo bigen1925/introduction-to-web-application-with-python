@@ -117,7 +117,7 @@ Accept-Language: ja-JP,ja;q=0.9,en-US;q=0.8,en;q=0.7
 それでは、まずはApacheを起動します。
 
 STEP1のときと同様に、`apachectl`を使ってApacheを起動させます。
-```bash
+```shell
 $ sudo apachectl start
 $
 ```
@@ -136,7 +136,7 @@ Chromeで`http://localhost`へアクセスし、`It works!`の画面が表示さ
 
 コンソールでstudyディレクトリまで移動し、`TCPServer.py`を実行します。
 
-```bash
+```shell
 $ python TCPClient.py
 === クライアントを起動します ===
 === サーバーと接続します ===
