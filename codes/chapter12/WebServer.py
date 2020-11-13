@@ -89,7 +89,7 @@ class WebServer:
                 except Exception:
                     # リクエストの処理中に例外が発生した場合はコンソールにエラーログを出力し、
                     # 処理を続行する
-                    print("リクエストの処理中にエラーが発生しました。")
+                    print("=== リクエストの処理中にエラーが発生しました ===")
                     traceback.print_exc()
 
                 finally:

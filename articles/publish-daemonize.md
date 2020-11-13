@@ -148,7 +148,7 @@ https://github.com/bigen1925/introduction-to-web-application-with-python/blob/ma
                 except Exception:
                     # リクエストの処理中に例外が発生した場合はコンソールにエラーログを出力し、
                     # 処理を続行する
-                    print("リクエストの処理中にエラーが発生しました。")
+                    print("=== リクエストの処理中にエラーが発生しました ===")
                     traceback.print_exc()
 
                 finally:
@@ -160,7 +160,7 @@ https://github.com/bigen1925/introduction-to-web-application-with-python/blob/ma
 
 例外処理をしておかないとループの途中で例外が発生した場合にプログラム全体が停止してしまいますが、上記のようにハンドリングすることでその時扱っているリクエストの処理だけ中断させますが、プログラム全体は停止せずに次のループへ進むことになります。
 
-また、`cient_socket`の`close()`はtry句の末尾でやるのではなく、finally句で行います。
+また、`client_socket`の`close()`はtry句の末尾でやるのではなく、finally句で行います。
 try句の末尾でやってしまうと、途中で例外が発生した場合にコネクションの切断がスキップされてしまうためです。
 
 # 動かしてみる
