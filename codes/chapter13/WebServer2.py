@@ -26,7 +26,7 @@ class WebServer:
                 print(f"=== Server: クライアントとの接続が完了しました remote_address: {address} ===")
 
                 # クライアントを処理するスレッドを作成
-                thread = WorkerThread(client_socket)
+                thread = WorkerThread(client_socket, address)
                 # スレッドを実行
                 thread.start()
 

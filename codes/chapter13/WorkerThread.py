@@ -12,17 +12,18 @@ class WorkerThread(Thread):
     # 静的配信するファイルを置くディレクトリ
     DOCUMENT_ROOT = os.path.join(BASE_DIR, "static")
 
-    def __init__(self, client_socket: socket):
+    def __init__(self, client_socket: socket, address: Tuple[str, int]):
         super().__init__()
 
         self.client_socket = client_socket
+        self.client_address = address
 
     def run(self) -> None:
         """
         クライアントと接続済みのsocketを引数として受け取り、
         リクエストを処理してレスポンスを送信する
         """
-        
+
         try:
 
             # クライアントから送られてきたデータを取得する
@@ -64,7 +65,7 @@ class WorkerThread(Thread):
 
         finally:
             # 例外が発生した場合も、発生しなかった場合も、TCP通信のcloseは行う
-            print("=== Worker: クライアントとの通信を終了します ===")
+            print(f"=== Worker: クライアントとの通信を終了します remote_address: {self.client_address} ===")
             self.client_socket.close()
 
     def parse_http_request(self, request: bytes) -> Tuple[str, str, str, bytes, bytes]:
