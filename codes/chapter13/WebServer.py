@@ -12,7 +12,7 @@ class WebServer:
     # 実行ファイルのあるディレクトリ
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     # 静的配信するファイルを置くディレクトリ
-    DOCUMENT_ROOT = os.path.join(BASE_DIR, "static")
+    STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
     def serve(self):
         """
@@ -44,7 +44,7 @@ class WebServer:
                 finally:
                     # 例外が発生した場合も、発生しなかった場合も、TCP通信のcloseは行う
                     print("=== クライアントとの通信を終了します ===")
-                    client_socket.close()
+                    client_socket.close() 
 
         finally:
             print("=== サーバーを停止します。 ===")
@@ -132,7 +132,7 @@ class WebServer:
         # pathの先頭の/を削除し、相対パスにしておく
         relative_path = path.lstrip("/")
         # ファイルのpathを取得
-        static_file_path = os.path.join(self.DOCUMENT_ROOT, relative_path)
+        static_file_path = os.path.join(self.STATIC_ROOT, relative_path)
 
         with open(static_file_path, "rb") as f:
             return f.read()

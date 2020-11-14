@@ -11,7 +11,7 @@ class WebServer:
     # 実行ファイルのあるディレクトリ
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     # 静的配信するファイルを置くディレクトリ
-    DOCUMENT_ROOT = os.path.join(BASE_DIR, "static")
+    STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
     def serve(self):
         """
@@ -57,7 +57,7 @@ class WebServer:
                     # pathの先頭の/を削除し、相対パスにしておく
                     relative_path = path.lstrip("/")
                     # ファイルのpathを取得
-                    static_file_path = os.path.join(self.DOCUMENT_ROOT, relative_path)
+                    static_file_path = os.path.join(self.STATIC_ROOT, relative_path)
 
                     # ファイルからレスポンスボディを生成
                     try:

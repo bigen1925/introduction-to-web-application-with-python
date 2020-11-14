@@ -45,18 +45,18 @@ https://github.com/bigen1925/introduction-to-web-application-with-python/blob/ma
 # 解説
 
 ## 10-13行目: HTMLファイルを置くディレクトリの定義
-で、HTMLファイルを置くディレクトリ（`DOCUMENT_ROOT`と呼ぶことにしています）を定義しています。
+で、HTMLファイルを置くディレクトリ（`STATIC_ROOT`と呼ぶことにしています）を定義しています。
 
 ```python
     # 実行ファイルのあるディレクトリ
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     # 静的配信するファイルを置くディレクトリ
-    DOCUMENT_ROOT = os.path.join(BASE_DIR, "static")
+    STATIC_ROOT = os.path.join(BASE_DIR, "static")
 ```
 
 pythonでファイルパスを扱いなれてない方は読みづらいかもしれませんが、
 - `BASE_DIR`: `study`ディレクトリの絶対パス
-- `DOCUMENT_ROOT`: `study/static`ディレクトリの絶対パス
+- `STATIC_ROOT`: `study/static`ディレクトリの絶対パス
 
 が格納されています。
 
@@ -82,7 +82,7 @@ HTTPリクエストをパース（分解）して、pathの情報を抜き出し
             # pathの先頭の/を削除し、相対パスにしておく
             relative_path = path.lstrip("/")
             # ファイルのpathを取得
-            static_file_path = os.path.join(self.DOCUMENT_ROOT, relative_path)
+            static_file_path = os.path.join(self.STATIC_ROOT, relative_path)
 
             # ファイルからレスポンスボディを生成
             with open(static_file_path, "rb") as f:
@@ -90,7 +90,7 @@ HTTPリクエストをパース（分解）して、pathの情報を抜き出し
 ```
 
 :::message
-pathを取得したあと`DOCUMENT_ROOT`と結合して`static_file_path`を取得するのですが、その前に先頭の`/`を削除していることに注意してください。
+pathを取得したあと`STATIC_ROOT`と結合して`static_file_path`を取得するのですが、その前に先頭の`/`を削除していることに注意してください。
 
 これは、pythonの`os.path.join(base, path)`の仕様として、第2引数`path`に`/`で始まる絶対パスを与えると第一引数`base`を無視してしまうためです。
 :::
@@ -116,7 +116,7 @@ $ python WebServer.py
 
 意外と簡単ですね〜
 
-興味のある方は、`DOCUMENT_ROOT`に他のhtmlファイルも用意してみて、それぞれファイル名をpathに指定するとブラウザに内容が表示されることも確認してみましょう。
+興味のある方は、`STATIC_ROOT`に他のhtmlファイルも用意してみて、それぞれファイル名をpathに指定するとブラウザに内容が表示されることも確認してみましょう。
 
 # `404 Not Found`を実装する
 ところで、サーバーを起動したあと、ブラウザでファイルが存在しないパス（`/hoge.html`など）にアクセスしてみましょう。

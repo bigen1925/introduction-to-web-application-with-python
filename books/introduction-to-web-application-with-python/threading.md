@@ -195,7 +195,7 @@ class WorkerThread(Thread):
     # 実行ファイルのあるディレクトリ
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     # 静的配信するファイルを置くディレクトリ
-    DOCUMENT_ROOT = os.path.join(BASE_DIR, "static")
+    STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
     def __init__(self, client_socket: socket):
         super().__init__()
