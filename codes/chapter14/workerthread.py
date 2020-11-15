@@ -6,6 +6,8 @@ from socket import socket
 from threading import Thread
 from typing import Tuple
 
+from codes.chapter14.exceptions import PathDoesNotMatchException
+
 codes/chapter13/webserver.py
 class WorkerThread(Thread):
     # 実行ファイルのあるディレクトリ
@@ -55,13 +57,14 @@ class WorkerThread(Thread):
                     response_body = self.get_static_file_content(path)
 
                 else:
-                    print("=== Worker: pathがマッチしませんでした ===")
-                    raise PathDoesNotMatchError
+                    raise PathDoesNotMatchException(f"pathがマッチしませんでした path: {path}")
                 # レスポンスラインを生成
                 response_line = "HTTP/1.1 200 OK\r\n"
 
-            except OSError:
-                # ファイルが見つからなかった場合は404を返す
+            except (OSError, PathDoesNotMatchException):
+                # レスポンスを取得できなかった場合は、ログを出力して404を返す
+                traceback.print_exc()
+
                 response_body = b"<html><body><h1>404 Not Found</h1></body></html>"
                 response_line = "HTTP/1.1 404 Not Found\r\n"
 
