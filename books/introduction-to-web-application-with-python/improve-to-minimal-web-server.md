@@ -348,7 +348,7 @@ if __name__ == '__main__':
     server.serve()
 
 ```
-https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter10/tcpserver.py
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter10/webserver.py
 
 ## 解説
 ### ファイル名とクラス名を変更
