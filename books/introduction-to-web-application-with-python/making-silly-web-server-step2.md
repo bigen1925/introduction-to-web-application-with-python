@@ -30,11 +30,11 @@ TCPサーバーってなんぞや、というのは後ほど説明すること�
 **（以降、本書ではこの勉強用ディレクトリを`study/`とします）**
 
 
-そして、下記が **ブラウザからのリクエストを受け取ってファイル(server_recv.txt)に書き出すプログラム** `TCPServer.py` です。
+そして、下記が **ブラウザからのリクエストを受け取ってファイル(server_recv.txt)に書き出すプログラム** `tcpserver.py` です。
 `study/`の中に作成してください。
 
 
-**`study/TCPServer.py`**
+**`study/tcpserver.py`**
 ```python
 import socket
 
@@ -83,16 +83,16 @@ if __name__ == '__main__':
     server.serve()
 
 ```
-https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter6/TCPServer.py
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter6/tcpserver.py
 
 # 実際に動かしてみる
 説明の前に、まずはこのTCPサーバーを動かしてみましょう。
 
 ## TCPサーバーを起動する
-コンソールで`study`ディレクトリまで移動し、`TCPServer.py`を実行します。
+コンソールで`study`ディレクトリまで移動し、`tcpserver.py`を実行します。
 
 ```shell
-$ python TCPServer.py
+$ python tcpserver.py
 === サーバーを起動します ===
 === クライアントからの接続を待ちます ===
 ```

@@ -19,9 +19,9 @@ title: "STEP4: 自作サーバーを進化させる"
 
 いきなりソースコードの話にいってしまいます。
 
-STEP2で作成した`TCPServer.py`を、以下のように修正します。
+STEP2で作成した`tcpserver.py`を、以下のように修正します。
 
-**`study/TCPServer.py`**
+**`study/tcpserver.py`**
 ```python
 import socket
 
@@ -76,7 +76,7 @@ if __name__ == '__main__':
     server = TCPServer()
     server.serve()
 ```
-https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter8/TCPServer.py
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter8/tcpserver.py
 
 変わったのは36~41行目です。
 ::: messages
@@ -122,7 +122,7 @@ Content-Type: text/html
 STEP2と同様に、`study`ディレクトリまで移動し、コンソールでTCPサーバーを起動します。
 
 ```shell
-$ python TCPServer.py
+$ python tcpserver.py
 === サーバーを起動します ===
 === クライアントからの接続を待ちます ===
 ```
@@ -142,7 +142,7 @@ ChromeのURLバーに`http://localhost:8080`と入力してみましょう。
 サーバーを起動したコンソールのタブを確認すると、下記のようにログが追加されているはずです。
 
 ```shell
-$ python TCPServer.py
+$ python tcpserver.py
 === サーバーを起動します ===
 === クライアントからの接続を待ちます ===
 === クライアントとの接続が完了しました remote_address: ('127.0.0.1', 59550) ===

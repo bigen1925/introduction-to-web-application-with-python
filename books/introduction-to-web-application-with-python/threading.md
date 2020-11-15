@@ -30,8 +30,8 @@ title: "リクエストを並列処理する"
 
 細かい処理をメソッドに切り出してリファクタリングしたものがこちらになります。
 
-**`study/WebServer.py`**
-https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter13/WebServer.py
+**`study/webserver.py`**
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter13/webserver.py
 
 ## 解説
 
@@ -153,10 +153,10 @@ DBからの応答を待つ30秒の間、マシンが他の9件のリクエスト
 並列処理を行うように改良したソースコードがこちらです。
 ファイルが2つになっていますので、ご注意ください。
 
-**`study/WebServer.py`**
+**`study/webserver.py`**
 https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter13/WebServer2.py
 
-**`study/WorkerThread.py`**
+**`study/workerthread.py`**
 https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter13/WebServer2.py
 
 ## 解説
@@ -172,7 +172,7 @@ print("=== Server: サーバーを起動します ===")
 print("=== Worker: クライアントとの通信を終了します ===")
 ```
 
-### `WebServer.py`
+### `webserver.py`
 
 #### 28-31行目
 ```python
@@ -187,7 +187,7 @@ print("=== Worker: クライアントとの通信を終了します ===")
 
 **スレッド**とはコンピュータが並列に処理を行うことが可能な処理系列のことで、後ほど詳細を説明します。
 
-### `WorkerThread.py`
+### `workerthread.py`
 
 #### 9行目-57行目
 ```python
@@ -265,7 +265,7 @@ Webサーバーの多くがスレッド数やプロセス数に上限を設定�
 いつもどおりコンソールからWebServerを起動します。
 
 ```shell
-$ python WebServer.py
+$ python webserver.py
 === Server: サーバーを起動します ===
 === Server: クライアントからの接続を待ちます ===
 ```
@@ -280,7 +280,7 @@ $ python WebServer.py
 サーバーを起動したコンソールを開いてください。
 
 ```shell
-$ python WebServer.py
+$ python webserver.py
 === Server: サーバーを起動します ===
 === Server: クライアントからの接続を待ちます ===
 === Server: クライアントとの接続が完了しました remote_address: ('127.0.0.1', 56249) ===

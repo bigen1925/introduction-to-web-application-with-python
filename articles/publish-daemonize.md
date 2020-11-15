@@ -126,8 +126,8 @@ Chromeはこのページを表示するために、全部で4件の通信を行�
 
 ソースコードがこちらです。
 
-**`study/WebServer.py`**
-https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter12/WebServer.py
+**`study/webserver.py`**
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter12/webserver.py
 
 ## 解説
 

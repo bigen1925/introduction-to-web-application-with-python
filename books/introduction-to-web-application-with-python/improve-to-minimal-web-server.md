@@ -279,7 +279,7 @@ RFC: https://triple-underscore.github.io/RFC7231-ja.html#header.content-type
 
 では、まずは改良を加えたソースコードを見ていきましょう。
 
-**`study/WebServer.py`** (旧: `study/TCPServer.py`)
+**`study/webserver.py`** (旧: `study/tcpserver.py`)
 ```python
 import socket
 from datetime import datetime
@@ -348,11 +348,11 @@ if __name__ == '__main__':
     server.serve()
 
 ```
-https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter10/TCPServer.py
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter10/tcpserver.py
 
 ## 解説
 ### ファイル名とクラス名を変更
-`TCPServer.py` => `WebServer.py`
+`tcpserver.py` => `webserver.py`
 ```python
 class WebServer:
     """
@@ -406,10 +406,10 @@ if __name__ == '__main__':
 ## 動かしてみる
 それでは、実際にプログラムを動かしてみましょう。
 
-動かし方は前回までと同じで、コンソールで`study`ディレクトリまで移動した後、`python WebServer.py`を実行します。
+動かし方は前回までと同じで、コンソールで`study`ディレクトリまで移動した後、`python webserver.py`を実行します。
 
 ```shell
-$ python WebServer.py
+$ python webserver.py
 === サーバーを起動します ===
 === クライアントからの接続を待ちます ===
 ```

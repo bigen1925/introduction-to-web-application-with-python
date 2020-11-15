@@ -19,9 +19,9 @@ title: "STEP3: 自作クライアントとApacheで通信してみる"
 # いきなりソースコード
 さて、前章と同じく、そんなTCPクライアントのソースコードをいきなり書いてみましょう。
 
-前章同様、`study`ディレクトリの中に次の`TCPClient.py`を用意してください。
+前章同様、`study`ディレクトリの中に次の`tcpclient.py`を用意してください。
 
-**`study/TCPClient.py`**
+**`study/tcpclient.py`**
 ```python
 import socket
 
@@ -72,7 +72,7 @@ if __name__ == '__main__':
     client = TCPClient()
     client.request()
 ```
-https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter7/TCPClient.py
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter7/tcpclient.py
 
 また、新しく`study/client_send.txt`というファイルを新しく作成してください。
 そしてSTEP2で生成した、ブラウザからのリクエストを記録した`study/server_recv.txt`の内容をまるっとコピーしてください。
@@ -134,10 +134,10 @@ Chromeで`http://localhost`へアクセスし、`It works!`の画面が表示さ
 ## TCPクライアントを起動する
 次に、TCPクライアントを起動してみましょう。
 
-コンソールでstudyディレクトリまで移動し、`TCPServer.py`を実行します。
+コンソールでstudyディレクトリまで移動し、`tcpserver.py`を実行します。
 
 ```shell
-$ python TCPClient.py
+$ python tcpclient.py
 === クライアントを起動します ===
 === サーバーと接続します ===
 === サーバーとの接続が完了しました ===

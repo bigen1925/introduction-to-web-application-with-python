@@ -110,8 +110,8 @@ Chromeはこのページを表示するために、全部で4件の通信を行�
 
 ソースコードがこちらです。
 
-**`study/WebServer.py`**
-https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter12/WebServer.py
+**`study/webserver.py`**
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter12/webserver.py
 
 ## 解説
 
@@ -153,7 +153,7 @@ try句の末尾でやってしまうと、途中で例外が発生した場合�
 いつもどおりコンソールからサーバーを起動します。
 
 ```shell
-$ python WebServer.py
+$ python webserver.py
 === サーバーを起動します ===
 === クライアントからの接続を待ちます ===
 ```
@@ -173,7 +173,7 @@ $ python WebServer.py
 繰り返しコネクションを確立させ、リクエストを処理している様子が分かるはずです。
 
 ```shell
-$ python WebServer.py
+$ python webserver.py
 === サーバーを起動します ===
 === クライアントからの接続を待ちます ===
 === クライアントとの接続が完了しました remote_address: ('127.0.0.1', 50404) ===
@@ -230,7 +230,7 @@ Webサーバーを更に改良して、ファイル形式に沿った`Content-Ty
 ## ソースコード
 改良したものがこちらです。
 
-**`study/WebServer.py`**
+**`study/webserver.py`**
 https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter12/WebServer2.py
 
 ## 解説

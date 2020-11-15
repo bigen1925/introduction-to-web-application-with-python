@@ -30,8 +30,8 @@ title: "HTMLファイルを配信できるようにする"
 Githubにソースコード全体がアップロードされていますので、そちらをご参照ください。
 :::
 
-**`study/WebServer.py`**
-https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter11/WebServer.py
+**`study/webserver.py`**
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter11/webserver.py
 
 また、プログラムが正常に動いているか確認するにはHTMLファイルを別途用意する必要があるので、そちらも作成しておきます。
 `study`ディレクトリ直下に`static`ディレクトリを新しく作成し、その中に`index.html`を作成します。
@@ -102,7 +102,7 @@ pathを取得したあと`STATIC_ROOT`と結合して`static_file_path`を取得
 
 まずはこれまで同様、コンソールで`study`ディレクトリまで移動し、サーバーを起動します。
 ```shell
-$ python WebServer.py
+$ python webserver.py
 === サーバーを起動します ===
 === クライアントからの接続を待ちます ===
 ```
@@ -132,15 +132,15 @@ $ python WebServer.py
 以下のような`FileNotFoundError`のエラーログが出ていると思います。
 
 ```shell
-$ python WebServer.py
+$ python webserver.py
 === サーバーを起動します ===
 === クライアントからの接続を待ちます ===
 === クライアントとの接続が完了しました remote_address: ('127.0.0.1', 60130) ===
 === サーバーを停止します。 ===
 Traceback (most recent call last):
-  File "/~~~~/WebServer.py", line 88, in <module>
+  File "/~~~~/webserver.py", line 88, in <module>
     server.serve()
-  File "/~~~~/WebServer.py", line 60, in serve
+  File "/~~~~/webserver.py", line 60, in serve
     with open(static_file_path, "rb") as f:
 FileNotFoundError: [Errno 2] No such file or directory: '/~~~~/static/hoge.html'
 ```
@@ -162,7 +162,7 @@ FileNotFoundError: [Errno 2] No such file or directory: '/~~~~/static/hoge.html'
 ## ソースコード
 `404 Not Found`を実装したソースコードがこちらになります。
 
-**`study/WebServer.py`**
+**`study/webserver.py`**
 https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter11/WebServer2.py
 
 ## 解説

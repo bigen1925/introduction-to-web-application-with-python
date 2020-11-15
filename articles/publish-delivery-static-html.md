@@ -46,8 +46,8 @@ published: true
 各章、Githubにソースコード全体がアップロードされていますので、そちらをご参照ください。
 :::
 
-**`study/WebServer.py`**
-https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter11/WebServer.py
+**`study/webserver.py`**
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter11/webserver.py
 
 また、プログラムが正常に動いているか確認するにはHTMLファイルを別途用意する必要があるので、そちらも作成しておきます。
 `study`ディレクトリ直下に`static`ディレクトリを新しく作成し、その中に`index.html`を作成します。
