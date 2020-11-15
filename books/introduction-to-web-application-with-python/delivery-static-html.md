@@ -163,7 +163,7 @@ FileNotFoundError: [Errno 2] No such file or directory: '/~~~~/static/hoge.html'
 `404 Not Found`を実装したソースコードがこちらになります。
 
 **`study/webserver.py`**
-https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter11/WebServer2.py
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter11/webserver2.py
 
 ## 解説
 ### 59-70行目

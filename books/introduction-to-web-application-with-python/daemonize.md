@@ -231,7 +231,7 @@ Webサーバーを更に改良して、ファイル形式に沿った`Content-Ty
 改良したものがこちらです。
 
 **`study/webserver.py`**
-https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter12/WebServer2.py
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter12/webserver2.py
 
 ## 解説
 

@@ -154,10 +154,10 @@ DBからの応答を待つ30秒の間、マシンが他の9件のリクエスト
 ファイルが2つになっていますので、ご注意ください。
 
 **`study/webserver.py`**
-https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter13/WebServer2.py
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter13/webserver2.py
 
 **`study/workerthread.py`**
-https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter13/WebServer2.py
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter13/webserver2.py
 
 ## 解説
 ### `共通`
