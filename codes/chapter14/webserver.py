@@ -1,6 +1,6 @@
 import socket
 
-from codes.chapter14.workerthread import WorkerThread
+from workerthread import WorkerThread
 
 
 class WebServer:

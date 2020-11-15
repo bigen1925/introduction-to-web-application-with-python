@@ -6,9 +6,7 @@ from socket import socket
 from threading import Thread
 from typing import Tuple
 
-from codes.chapter14.exceptions import PathDoesNotMatchException
 
-codes/chapter13/webserver.py
 class WorkerThread(Thread):
     # 実行ファイルのあるディレクトリ
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -41,8 +39,10 @@ class WorkerThread(Thread):
             # HTTPリクエストをパースする
             method, path, http_version, request_header, request_body = self.parse_http_request(request)
 
+            response_body: bytes
+            response_line: str
             try:
-                # 特定のパスのときは、レスポンスは動的に生成する
+                # pathがnowのときは動的にレスポンスを生成し、それ以外は静的ファイルからレスポンスを取得する
                 if path == '/now':
                     response_body = textwrap.dedent(f'''\
                         <html>
@@ -52,12 +52,9 @@ class WorkerThread(Thread):
                         </html>
                     ''').encode()
 
-                elif path.startswith(self.STATIC_URL):
-                    # 特定のパスに当てはまらない場合は、レスポンソは静的ファイルから取得して生成する
+                else:
                     response_body = self.get_static_file_content(path)
 
-                else:
-                    raise PathDoesNotMatchException(f"pathがマッチしませんでした path: {path}")
                 # レスポンスラインを生成
                 response_line = "HTTP/1.1 200 OK\r\n"
 
