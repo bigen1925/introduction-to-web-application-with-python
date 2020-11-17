@@ -9,6 +9,7 @@ class WebServer:
     """
     Webサーバーを表すクラス
     """
+
     # 実行ファイルのあるディレクトリ
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     # 静的配信するファイルを置くディレクトリ
@@ -44,7 +45,7 @@ class WebServer:
                 finally:
                     # 例外が発生した場合も、発生しなかった場合も、TCP通信のcloseは行う
                     print("=== クライアントとの通信を終了します ===")
-                    client_socket.close() 
+                    client_socket.close()
 
         finally:
             print("=== サーバーを停止します。 ===")
@@ -152,6 +153,6 @@ class WebServer:
         return response_header
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     server = WebServer()
     server.serve()

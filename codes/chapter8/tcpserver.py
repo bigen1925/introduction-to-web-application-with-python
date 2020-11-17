@@ -5,6 +5,7 @@ class TCPServer:
     """
     TCP通信を行うサーバーを表すクラス
     """
+
     def serve(self):
         """
         サーバーを起動する
@@ -47,6 +48,6 @@ class TCPServer:
             print("=== サーバーを停止します。 ===")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     server = TCPServer()
     server.serve()

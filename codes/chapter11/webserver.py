@@ -7,6 +7,7 @@ class WebServer:
     """
     Webサーバーを表すクラス
     """
+
     # 実行ファイルのあるディレクトリ
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     # 静的配信するファイルを置くディレクトリ
@@ -83,6 +84,6 @@ class WebServer:
             print("=== サーバーを停止します。 ===")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     server = WebServer()
     server.serve()

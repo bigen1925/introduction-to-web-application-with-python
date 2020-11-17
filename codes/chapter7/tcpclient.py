@@ -5,6 +5,7 @@ class TCPClient:
     """
     TCP通信を行うクライアントを表すクラス
     """
+
     def request(self):
         """
         サーバーへリクエストを送信する
@@ -43,6 +44,6 @@ class TCPClient:
             print("=== クライアントを停止します。 ===")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     client = TCPClient()
     client.request()

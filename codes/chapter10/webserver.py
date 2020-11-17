@@ -6,6 +6,7 @@ class WebServer:
     """
     Webサーバーを表すクラス
     """
+
     def serve(self):
         """
         サーバーを起動する
@@ -60,6 +61,6 @@ class WebServer:
             print("=== サーバーを停止します。 ===")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     server = WebServer()
     server.serve()
