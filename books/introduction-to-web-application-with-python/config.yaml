@@ -40,7 +40,7 @@ chapters:
   - delivery-static-html.md
   - daemonize.md
   - threading.md
-  - draft1.md
+  - dynamic-response-generation.md
   - draft3.md
   - draft4.md
   - draft5.md
