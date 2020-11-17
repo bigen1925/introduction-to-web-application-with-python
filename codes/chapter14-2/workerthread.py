@@ -121,7 +121,7 @@ class WorkerThread(Thread):
         1. method: str
         2. path: str
         3. http_version: str
-        4. request_header: bytes
+        4. request_header: dict
         5. request_body: bytes
         に分割/変換する
         """
