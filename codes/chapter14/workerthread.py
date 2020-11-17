@@ -41,7 +41,7 @@ class WorkerThread(Thread):
 
             response_body: bytes
             response_line: str
-            # pathがnowのときは動的にレスポンスを生成し、それ以外は静的ファイルからレスポンスを取得する
+            # pathが/nowのときは、現在時刻を表示するHTMLを生成する
             if path == "/now":
                 html = f"""\
                     <html>
@@ -55,6 +55,7 @@ class WorkerThread(Thread):
                 # レスポンスラインを生成
                 response_line = "HTTP/1.1 200 OK\r\n"
 
+            # pathがそれ以外のときは、静的ファイルからレスポンスを生成する
             else:
                 try:
                     response_body = self.get_static_file_content(path)
