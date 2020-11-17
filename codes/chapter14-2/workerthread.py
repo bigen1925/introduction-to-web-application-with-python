@@ -1,7 +1,9 @@
 import os
+import re
 import textwrap
 import traceback
 from datetime import datetime
+from pprint import pformat
 from socket import socket
 from threading import Thread
 from typing import Tuple
@@ -55,6 +57,29 @@ class WorkerThread(Thread):
                 # レスポンスラインを生成
                 response_line = "HTTP/1.1 200 OK\r\n"
 
+            elif path == "/show_request":
+                html = f"""\
+                    <html>
+                    <body>
+                        <h1>Request Line:</h1>
+                        <p>
+                            {method} {path} {http_version}
+                        </p>
+                        <h1>Headers:</h1>
+                        <pre>{pformat(request_header)}</pre>
+                        <h1>Body:</h1>
+                        <p>
+                            {request_body}
+                        </p>
+                        
+                    </body>
+                    </html>
+                """
+                response_body = textwrap.dedent(html).encode()
+
+                # レスポンスラインを生成
+                response_line = "HTTP/1.1 200 OK\r\n"
+
             else:
                 try:
                     response_body = self.get_static_file_content(path)
@@ -88,7 +113,7 @@ class WorkerThread(Thread):
             print(f"=== Worker: クライアントとの通信を終了します remote_address: {self.client_address} ===")
             self.client_socket.close()
 
-    def parse_http_request(self, request: bytes) -> Tuple[str, str, str, bytes, bytes]:
+    def parse_http_request(self, request: bytes) -> Tuple[str, str, str, dict, bytes]:
         """
         HTTPリクエストを
         1. method: str
@@ -110,7 +135,13 @@ class WorkerThread(Thread):
         # リクエストラインを文字列に変換してパースする
         method, path, http_version = request_line.decode().split(" ")
 
-        return method, path, http_version, request_header, request_body
+        # リクエストヘッダーを辞書にパースする
+        headers = {}
+        for header_row in request_header.decode().split("\r\n"):
+            key, value = re.split(": *", header_row, maxsplit=1)
+            headers[key] = value
+
+        return method, path, http_version, headers, request_body
 
     def get_static_file_content(self, path: str) -> bytes:
         """
