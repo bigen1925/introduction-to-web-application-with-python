@@ -140,7 +140,7 @@ class WorkerThread(Thread):
         # リクエストヘッダーを辞書にパースする
         headers = {}
         for header_row in request_header.decode().split("\r\n"):
-            key, value = re.split(": *", header_row, maxsplit=1)
+            key, value = re.split(r": *", header_row, maxsplit=1)
             headers[key] = value
 
         return method, path, http_version, headers, request_body
