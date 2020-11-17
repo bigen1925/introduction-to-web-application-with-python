@@ -81,7 +81,7 @@ class WorkerThread(Thread):
 
         # リクエスト全体を
         # - リクエストライン(1行目)
-        # - リクエストボディ(2行目〜空行)
+        # - リクエストヘッダー(2行目〜空行)
         # - リクエストボディ(空行〜)
         # にパースする
         request_line, remain = request.split(b"\r\n", maxsplit=1)

@@ -55,7 +55,7 @@ class WebServer:
 
                     # リクエスト全体を
                     # 1. リクエストライン(1行目)
-                    # 2. リクエストボディ(2行目〜空行)
+                    # 2. リクエストヘッダー(2行目〜空行)
                     # 3. リクエストボディ(空行〜)
                     # にパースする
                     request_line, remain = request.split(b"\r\n", maxsplit=1)
