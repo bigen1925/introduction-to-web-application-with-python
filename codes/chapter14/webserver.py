@@ -48,6 +48,6 @@ class WebServer:
         return server_socket
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     server = WebServer()
     server.serve()

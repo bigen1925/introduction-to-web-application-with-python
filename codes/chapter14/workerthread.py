@@ -41,29 +41,32 @@ class WorkerThread(Thread):
 
             response_body: bytes
             response_line: str
-            try:
-                # pathがnowのときは動的にレスポンスを生成し、それ以外は静的ファイルからレスポンスを取得する
-                if path == '/now':
-                    response_body = textwrap.dedent(f'''\
-                        <html>
-                        <body>
-                            <h1>Now: {datetime.now()}</h1>
-                        </body>
-                        </html>
-                    ''').encode()
-
-                else:
-                    response_body = self.get_static_file_content(path)
+            # pathがnowのときは動的にレスポンスを生成し、それ以外は静的ファイルからレスポンスを取得する
+            if path == "/now":
+                html = f"""\
+                    <html>
+                    <body>
+                        <h1>Now: {datetime.now()}</h1>
+                    </body>
+                    </html>
+                """
+                response_body = textwrap.dedent(html).encode()
 
                 # レスポンスラインを生成
                 response_line = "HTTP/1.1 200 OK\r\n"
 
-            except (OSError, PathDoesNotMatchException):
-                # レスポンスを取得できなかった場合は、ログを出力して404を返す
-                traceback.print_exc()
+            else:
+                try:
+                    response_body = self.get_static_file_content(path)
 
-                response_body = b"<html><body><h1>404 Not Found</h1></body></html>"
-                response_line = "HTTP/1.1 404 Not Found\r\n"
+                    # レスポンスラインを生成
+                    response_line = "HTTP/1.1 200 OK\r\n"
+                except OSError:
+                    # レスポンスを取得できなかった場合は、ログを出力して404を返す
+                    traceback.print_exc()
+
+                    response_body = b"<html><body><h1>404 Not Found</h1></body></html>"
+                    response_line = "HTTP/1.1 404 Not Found\r\n"
 
             # レスポンスヘッダーを生成
             response_header = self.build_response_header(response_body)
