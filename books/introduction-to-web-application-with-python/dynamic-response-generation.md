@@ -278,12 +278,12 @@ HTTPリクエストをパースする処理に少し変更を加えています�
             headers[key] = value
 ```
 今まで`request_header`は`bytes`のまま放置していたのですが、このままでは扱いにくいので**辞書に変換しています**。
-CRLFでsplitすることで1行ずつにバラしたあと、各行に対して`1つの":"と、0個異常の空白`を表す正規表現で分割してkeyとvalueを取得しています。
+CRLFでsplitすることで1行ずつにバラしたあと、各行に対して`1つの":"と、0個以上の空白`を表す正規表現で分割してkeyとvalueを取得しています。
 
 ```python
     def parse_http_request(self, request: bytes) -> Tuple[str, str, str, dict, bytes]:
 ```
-返り値の型が変わったので、型注釈を変更（`Tuple[str, str, str, bytes, bytes]:` => `Tuple[str, str, str, dict, bytes]:`）することも忘れないでください。^[ある程度賢いエディタであれば、型注釈を変更しないままだとが「なんかおかしくない？」と警告を出してくれると思います。便利ですね。]
+返り値の型が変わったので、型注釈を変更（`Tuple[str, str, str, bytes, bytes]:` => `Tuple[str, str, str, dict, bytes]:`）することも忘れないでください。^[ある程度賢いエディタであれば、型注釈を変更しないままだと「なんか型がおかしくない？」と警告を出してくれると思います。便利ですね。]
 
 ## 動かしてみる
 
