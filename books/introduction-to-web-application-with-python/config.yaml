@@ -41,6 +41,7 @@ chapters:
   - daemonize.md
   - threading.md
   - dynamic-response-generation.md
+  - post-parameters.md
   - draft3.md
   - draft4.md
   - draft5.md
