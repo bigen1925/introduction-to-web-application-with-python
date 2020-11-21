@@ -20,7 +20,7 @@ published: true
 
 # リクエストボディを扱う
 
-前章の最後に、Chromeで`/show_requests`へアクセスした結果を見てみるとリクエストボディが空になっていたことが分かりました。
+前章の最後に、Chromeで`/show_request`へアクセスした結果を見てみるとリクエストボディが空になっていたことが分かりました。
 
 しかし、仮にボディが空でなかったとして、私達のWebアプリケーションはリクエストボディを変換したり解釈したりする処理はまだないのでした。
 せっかくなので、ここいらでリクエストボディを扱えるようにしておきましょう。
@@ -65,9 +65,9 @@ https://github.com/bigen1925/introduction-to-web-application-with-python/blob/ma
 つまり、今回のように
 
 - 現在開いているページが `http://localhost:8080/form.html` である
-- `<form action="/show_requests">`である
+- `<form action="/show_request">`である
 
-という場合では、POSTリクエストは`http://localhost:8080/show_requests` へ送信されます。
+という場合では、POSTリクエストは`http://localhost:8080/show_request` へ送信されます。
 
 -----
 
@@ -75,14 +75,14 @@ https://github.com/bigen1925/introduction-to-web-application-with-python/blob/ma
 
 ![](https://storage.googleapis.com/zenn-user-upload/pnd9bojbf6owzp3n0oug8jvl6l5p)
 
-先程説明した通り、このフォームの入力内容は、POSTリクエスト`/show_requests`へ送られます。
-`/show_requests`は前章でHTTPリクエストの内容が表示されるようにしておいたはずですので、これでPOSTリクエストの内容が見れるだろう、という算段です。
+先程説明した通り、このフォームの入力内容は、POSTリクエスト`/show_request`へ送られます。
+`/show_request`は前章でHTTPリクエストの内容が表示されるようにしておいたはずですので、これでPOSTリクエストの内容が見れるだろう、という算段です。
 
 実際、送信ボタンを押すと、次の画面で下記のように表示されるはずです。
 
 ![](https://storage.googleapis.com/zenn-user-upload/z75ja4m8kbe0hnvn3m11mcdq55kn)
 
-単にURLバーに`/show_requests`と入力してページ遷移した場合と違って、リクエストボディに値が含まれていることが分かります。
+単にURLバーに`/show_request`と入力してページ遷移した場合と違って、リクエストボディに値が含まれていることが分かります。
 
 また、
 ```http
