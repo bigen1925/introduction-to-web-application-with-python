@@ -50,7 +50,7 @@ https://github.com/bigen1925/introduction-to-web-application-with-python/blob/ma
 
 エンコーディングについては話が込み入ってしまいますので、ピンと来ない方はおなじないだと思って追記しておいてください。
 
-**`study/workerthread.py`
+**`study/workerthread.py`**
 https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter15/workerthread.py#L169
 
 このファイルは **`static`ディレクトリの中に入っており静的ファイル配信の対象となります** ので、サーバーを起動した状態でChromeから `http://localhsot:8080/form.html` へアクセスすると表示することができます。
