@@ -216,9 +216,7 @@ https://github.com/bigen1925/introduction-to-web-application-with-python/blob/ma
                         <h1>Headers:</h1>
                         <pre>{pformat(request_header)}</pre>
                         <h1>Body:</h1>
-                        <p>
-                            {request_body}
-                        </p>
+                        <pre>{request_body.decode("utf-8", "ignore")}</pre>
                         
                     </body>
                     </html>
@@ -233,6 +231,8 @@ pathが`/show_request`だったときのレスポンスの生成を追加しま�
 とくに難しいところはないと思います。
 
 `pprint.pformat()`は、辞書を改行を交えて見やすい文字列に変換してくれます。
+
+`.decode("utf-8","ignore")`は、バイトデータをutf-8でデコードし、デコードできない文字は無視してそのまま表示します。
 
 なお、次の変更によって、`request_header`の型が`bytes` => `dict`に変更になっていることに気をつけてください。
 

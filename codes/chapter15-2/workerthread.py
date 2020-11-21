@@ -3,7 +3,7 @@ import re
 import textwrap
 import traceback
 from datetime import datetime
-from pprint import pformat
+from pprint import pformat, pprint
 from socket import socket
 from threading import Thread
 from typing import Tuple
@@ -69,7 +69,9 @@ class WorkerThread(Thread):
                         <h1>Headers:</h1>
                         <pre>{pformat(request_header)}</pre>
                         <h1>Body:</h1>
-                        <pre>{request_body.decode("utf-8", "ignore")}</pre>
+                        <p>
+                            {request_body}
+                        </p>
                         
                     </body>
                     </html>
