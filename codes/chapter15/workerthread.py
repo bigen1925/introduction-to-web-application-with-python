@@ -2,7 +2,6 @@ import os
 import re
 import textwrap
 import traceback
-import urllib.parse
 from datetime import datetime
 from pprint import pformat
 from socket import socket
@@ -72,21 +71,6 @@ class WorkerThread(Thread):
                         <h1>Body:</h1>
                         <pre>{request_body.decode("utf-8", "ignore")}</pre>
                         
-                    </body>
-                    </html>
-                """
-                response_body = textwrap.dedent(html).encode()
-
-                # レスポンスラインを生成
-                response_line = "HTTP/1.1 200 OK\r\n"
-
-            elif path == "/parameters":
-                post_params = urllib.parse.parse_qs(request_body.decode())
-                html = f"""\
-                    <html>
-                    <body>
-                        <h1>Parameters:</h1>
-                        <pre>{pformat(post_params)}</pre>                        
                     </body>
                     </html>
                 """
