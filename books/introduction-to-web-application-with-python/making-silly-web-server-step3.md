@@ -134,7 +134,7 @@ Chromeで`http://localhost`へアクセスし、`It works!`の画面が表示さ
 ## TCPクライアントを起動する
 次に、TCPクライアントを起動してみましょう。
 
-コンソールでstudyディレクトリまで移動し、`tcpserver.py`を実行します。
+コンソールでstudyディレクトリまで移動し、`tcpclient.py`を実行します。
 
 ```shell
 $ python tcpclient.py
