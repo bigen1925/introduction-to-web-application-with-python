@@ -2,7 +2,7 @@ import textwrap
 import urllib.parse
 from datetime import datetime
 from pprint import pformat
-from typing import Tuple
+from typing import Tuple, Optional
 
 
 def now(
@@ -11,7 +11,7 @@ def now(
     http_version: str,
     request_header: dict,
     request_body: bytes,
-) -> Tuple[bytes, str]:
+) -> Tuple[bytes, Optional[str], str]:
     """
     現在時刻を表示するHTMLを生成する
     """
@@ -24,10 +24,13 @@ def now(
     """
     response_body = textwrap.dedent(html).encode()
 
+    # Content-Typeを指定
+    content_type = "text/html; charset=UTF-8"
+
     # レスポンスラインを生成
     response_line = "HTTP/1.1 200 OK\r\n"
 
-    return response_body, response_line
+    return response_body, content_type, response_line
 
 
 def show_request(
@@ -36,7 +39,7 @@ def show_request(
     http_version: str,
     request_header: dict,
     request_body: bytes,
-) -> Tuple[bytes, str]:
+) -> Tuple[bytes, Optional[str], str]:
     """
     HTTPリクエストの内容を表示するHTMLを生成する
     """
@@ -57,10 +60,13 @@ def show_request(
     """
     response_body = textwrap.dedent(html).encode()
 
+    # Content-Typeを指定
+    content_type = "text/html; charset=UTF-8"
+
     # レスポンスラインを生成
     response_line = "HTTP/1.1 200 OK\r\n"
 
-    return response_body, response_line
+    return response_body, content_type, response_line
 
 
 def parameters(
@@ -69,7 +75,7 @@ def parameters(
     http_version: str,
     request_header: dict,
     request_body: bytes,
-) -> Tuple[bytes, str]:
+) -> Tuple[bytes, Optional[str], str]:
     """
     POSTパラメータを表示するHTMLを表示する
     """
@@ -77,6 +83,7 @@ def parameters(
     # GETリクエストの場合は、405を返す
     if method == "GET":
         response_body = b"<html><body><h1>405 Method Not Allowed</h1></body></html>"
+        content_type = "text/html; charset=UTF-8"
         response_line = "HTTP/1.1 405 Method Not Allowed\r\n"
 
     elif method == "POST":
@@ -91,7 +98,10 @@ def parameters(
         """
         response_body = textwrap.dedent(html).encode()
 
+        # Content-Typeを指定
+        content_type = "text/html; charset=UTF-8"
+
         # レスポンスラインを生成
         response_line = "HTTP/1.1 200 OK\r\n"
 
-    return response_body, response_line
+    return response_body, content_type, response_line
