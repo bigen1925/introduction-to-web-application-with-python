@@ -276,6 +276,20 @@ POSTパラメータが表示されましたね。
 ちなみに、`multipart/form-data`形式で送られてきた内容をパースするには、pythonでは`cgi`モジュールの`FieldStorage`というクラスを利用します。
 余裕のある人は、こちらにもチャレンジしてみても良いかもしれません。
 
+-------
+
+ついでにGETリクエストに対しては`405 Method Not Allowed`がレスポンスされるようにしていたのでした。
+そちらも確認しておきましょう。
+
+サーバーを起動したまま、今度は**単にChromeのURLバーに`http://localhost:8080/parameters` を入力してエンター**を押してください。
+
+![](https://storage.googleapis.com/zenn-user-upload/38j3zvw4cbod7kc3udihscix2qfb)
+
+ちゃんと表示されましたね。
+
+ここまで説明を省略していましたが、**ブラウザはURLバーに直接URLを入力したり`<a>`タグのリンクをクリックして移動したりして（フォームの送信ではない）通常のページ遷移を行った場合はGETリクエストを送信**します。
+
+今回のケースでは、URLバーに直接URLを入力することで、`/parameters`に対して（POSTではなく）GETリクエストを送信したため、`405 Method Not Allowd`の画面が表示されたわけです。
 
 -------
 
