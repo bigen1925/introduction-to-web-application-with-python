@@ -18,6 +18,7 @@ published: true
 
 ------
 
+
 # リクエストボディを扱う
 
 前章の最後に、Chromeで`/show_request`へアクセスした結果を見てみるとリクエストボディが空になっていたことが分かりました。
@@ -37,21 +38,36 @@ POSTリクエストをブラウザがどのようなときに送るかという�
 
 実際にフォームを含むHTMLを作成し、実験してみましょう。
 
-下記のHTMLを`study/static`内に作成してください。
+## ソースコード
+**`study/static/form.html`**
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter15/static/form.html
+
+**`study/workerthread.py`**
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter15/workerthread.py#L169
+
+## 解説
+### `study/static/form.html`
+
+HTMLファイルを新規に作成してください。
 
 内容は初歩的なHTMLで、詳しく説明する必要はないでしょう。
 1つの`<form>`タグの中に、テキストボックスやプルダウン、セレクトボックスなど、色々な種類の入力フォームが入っているだけです。
 
-**`study/static/form.html`**
-https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter15/static/form.html
+`static`ディレクトリ内に作成しなければいけないので注意してください。
 
-また、今回からレスポンスヘッダーを少し変更します。
+### `study/workerthread.py`
+#### 22, 67, 92, 112行目
+```python
+        "html": "text/html; charset=UTF-8",
+```
+```python
+                    content_type = "text/html; charset=UTF-8"
+```
+Content-Typeを少し変更しています。
+
 `Content-Type`ヘッダーには文字列のエンコーディングを指定することができ、ブラウザで日本語を表示させるためには日本語に対応したエンコーディングの指定が必要になります。
 
 エンコーディングについては話が込み入ってしまいますので、ピンと来ない方はおなじないだと思って追記しておいてください。
-
-**`study/workerthread.py`**
-https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter15/workerthread.py#L169
 
 このファイルは **`static`ディレクトリの中に入っており静的ファイル配信の対象となります** ので、サーバーを起動した状態でChromeから `http://localhsot:8080/form.html` へアクセスすると表示することができます。
 
