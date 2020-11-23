@@ -74,7 +74,7 @@ HTMLファイルを編集すればレスポンスも変化するのですから�
 CSSなどは確かにコンテンツの表示内容を変化（文字の色を赤くしたり）させますが、配信済みのHTMLの内容を変化させているわけではありません。
 
 ただし、HTMLと一緒にプログラムをブラウザに送りつけておけば、ブラウザがそのプログラムを後から実行することで配信済みのHTMLを変更させることができます。
-それがJavascriptなのです。
+（ちなみに、このプログラムがJavascriptです。）
 
 単に「動的なコンテンツ」を「Webページを変化させる」とだけ理解してしまうと、
 「文字の色を変化させるCSSも動的コンテンツを提供しているのでは？」
@@ -105,9 +105,10 @@ https://github.com/bigen1925/introduction-to-web-application-with-python/blob/ma
 
 ## 解説
 
-### 42-59行目
+### 51-69行目
 ```python
             response_body: bytes
+            content_type: Optional[str]
             response_line: str
             # pathが/nowのときは、現在時刻を表示するHTMLを生成する
             if path == "/now":
@@ -120,6 +121,9 @@ https://github.com/bigen1925/introduction-to-web-application-with-python/blob/ma
                 """
                 response_body = textwrap.dedent(html).encode()
 
+                # Content-Typeを指定
+                content_type = "text/html"
+
                 # レスポンスラインを生成
                 response_line = "HTTP/1.1 200 OK\r\n"
 
@@ -128,7 +132,7 @@ https://github.com/bigen1925/introduction-to-web-application-with-python/blob/ma
                 # ...
 ```
 
-追加したのはこの部分です。
+メインで追加したのはこの部分です。
 
 やっていることは、
 **「pathが`/now`だったら、pythonで現在時刻を表示するHTMLを生成し、レスポンスボディとする」**
@@ -142,9 +146,12 @@ https://github.com/bigen1925/introduction-to-web-application-with-python/blob/ma
 
 ```python
             response_body: bytes
+            content_type: Optional[str]
             response_line: str
 ```
 `response_body`や`response_line`を代入する箇所が複数に分かれてしまっていますので、事前に型注釈をしておくことにしました。
+`Optional[str]`は、`str型またはNone`を表す型です。
+他の言語ではNullable型などと呼ばれたりもします。
 
 変数の型注釈は、エディタ等に「この変数はこの型の値を代入することを想定していますよ」とヒントを伝える意味があります。
 このように記載しておくと、間違って「あっちでは`str`を代入、こっちでは`bytes`を代入」などとしてしまった際にエディタが事前に警告してくれるようになります。
@@ -162,6 +169,28 @@ https://github.com/bigen1925/introduction-to-web-application-with-python/blob/ma
 `ヒアドキュメント` + `dedent()`を使っています。
 単に普通のhtmlを書きたいだけなのですが、インデントとか改行とかがpythonでは意味を持ってしまいますので、工夫しています。
 それほど難しくはないので、「python ヒアドキュメント」「python dedent」などで調べてみてください。
+
+### 76-77, 87, 147-153行目
+```python
+                    # Content-Typeを指定
+                    content_type = None
+```
+```python
+                    content_type = "text/html"
+```
+```python
+    def build_response_header(self, path: str, response_body: bytes, content_type: Optional[str]) -> str:
+        """
+        レスポンスヘッダーを構築する
+        """
+
+        # Content-Typeが指定されていない場合はpathから特定する
+        if content_type is None:
+            # ...
+```
+動的コンテンツを利用する場合通常はpathからはレスポンスボディのフォーマットを特定することができないため、Content-Typeを明示的に指定するようにしています。
+
+逆に、pathからContent-Typeを特定したい場合には`None`を指定してあげるような実装にしてみました。
 
 ## 動かしてみる
 
@@ -202,7 +231,7 @@ https://github.com/bigen1925/introduction-to-web-application-with-python/blob/ma
 
 ## 解説
 
-### 60-82行目:
+### 72-95行目:
 ```python
             # pathが/show_requestのときは、HTTPリクエストの内容を表示するHTMLを生成する
             elif path == "/show_request":
@@ -223,6 +252,9 @@ https://github.com/bigen1925/introduction-to-web-application-with-python/blob/ma
                 """
                 response_body = textwrap.dedent(html).encode()
 
+                # Content-Typeを指定
+                content_type = "text/html"
+
                 # レスポンスラインを生成
                 response_line = "HTTP/1.1 200 OK\r\n"
 ```
@@ -236,7 +268,7 @@ pathが`/show_request`だったときのレスポンスの生成を追加しま�
 
 なお、次の変更によって、`request_header`の型が`bytes` => `dict`に変更になっていることに気をつけてください。
 
-### 118-146行目:
+### 135-163行目:
 ```python
     def parse_http_request(self, request: bytes) -> Tuple[str, str, str, dict, bytes]:
         """

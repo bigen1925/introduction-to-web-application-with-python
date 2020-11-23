@@ -6,7 +6,7 @@ from datetime import datetime
 from pprint import pformat
 from socket import socket
 from threading import Thread
-from typing import Tuple
+from typing import Tuple, Optional
 
 
 class WorkerThread(Thread):
@@ -16,6 +16,15 @@ class WorkerThread(Thread):
     STATIC_ROOT = os.path.join(BASE_DIR, "static")
     # 静的ファイルを配信するパスのprefix
     STATIC_URL = "/static/"
+
+    # 拡張子とMIME Typeの対応
+    MIME_TYPES = {
+        "html": "text/html",
+        "css": "text/css",
+        "png": "image/png",
+        "jpg": "image/jpg",
+        "gif": "image/gif",
+    }
 
     def __init__(self, client_socket: socket, address: Tuple[str, int]):
         super().__init__()
@@ -42,6 +51,7 @@ class WorkerThread(Thread):
             method, path, http_version, request_header, request_body = self.parse_http_request(request)
 
             response_body: bytes
+            content_type: Optional[str]
             response_line: str
             # pathが/nowのときは、現在時刻を表示するHTMLを生成する
             if path == "/now":
@@ -53,6 +63,9 @@ class WorkerThread(Thread):
                     </html>
                 """
                 response_body = textwrap.dedent(html).encode()
+
+                # Content-Typeを指定
+                content_type = "text/html"
 
                 # レスポンスラインを生成
                 response_line = "HTTP/1.1 200 OK\r\n"
@@ -76,6 +89,9 @@ class WorkerThread(Thread):
                 """
                 response_body = textwrap.dedent(html).encode()
 
+                # Content-Typeを指定
+                content_type = "text/html"
+
                 # レスポンスラインを生成
                 response_line = "HTTP/1.1 200 OK\r\n"
 
@@ -84,6 +100,9 @@ class WorkerThread(Thread):
                 try:
                     response_body = self.get_static_file_content(path)
 
+                    # Content-Typeを指定
+                    content_type = None
+
                     # レスポンスラインを生成
                     response_line = "HTTP/1.1 200 OK\r\n"
                 except OSError:
@@ -91,10 +110,11 @@ class WorkerThread(Thread):
                     traceback.print_exc()
 
                     response_body = b"<html><body><h1>404 Not Found</h1></body></html>"
+                    content_type = "text/html"
                     response_line = "HTTP/1.1 404 Not Found\r\n"
 
             # レスポンスヘッダーを生成
-            response_header = self.build_response_header(response_body)
+            response_header = self.build_response_header(path, response_body, content_type)
 
             # レスポンス全体を生成する
             response = (response_line + response_header + "\r\n").encode() + response_body
@@ -156,16 +176,27 @@ class WorkerThread(Thread):
         with open(static_file_path, "rb") as f:
             return f.read()
 
-    def build_response_header(self, response_body: bytes) -> str:
+    def build_response_header(self, path: str, response_body: bytes, content_type: Optional[str]) -> str:
         """
         レスポンスヘッダーを構築する
         """
+
+        # Content-Typeが指定されていない場合はpathから特定する
+        if content_type is None:
+            # pathから拡張子を取得
+            if "." in path:
+                ext = path.rsplit(".", maxsplit=1)[-1]
+            else:
+                ext = ""
+            # 拡張子からMIME Typeを取得
+            # 知らない対応していない拡張子の場合はoctet-streamとする
+            content_type = self.MIME_TYPES.get(ext, "application/octet-stream")
 
         response_header = ""
         response_header += f"Date: {datetime.utcnow().strftime('%a, %d %b %Y %H:%M:%S GMT')}\r\n"
         response_header += "Host: HenaServer/0.1\r\n"
         response_header += f"Content-Length: {len(response_body)}\r\n"
         response_header += "Connection: Close\r\n"
-        response_header += "Content-Type: text/html\r\n"
+        response_header += f"Content-Type: {content_type}\r\n"
 
         return response_header
