@@ -189,13 +189,22 @@ print("=== Worker: クライアントとの通信を終了します ===")
 
 ### `workerthread.py`
 
-#### 9行目-57行目
+#### 9行目-67行目
 ```python
 class WorkerThread(Thread):
     # 実行ファイルのあるディレクトリ
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     # 静的配信するファイルを置くディレクトリ
     STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+    # 拡張子とMIME Typeの対応
+    MIME_TYPES = {
+        "html": "text/html",
+        "css": "text/css",
+        "png": "image/png",
+        "jpg": "image/jpg",
+        "gif": "image/gif",
+    }
 
     def __init__(self, client_socket: socket):
         super().__init__()
