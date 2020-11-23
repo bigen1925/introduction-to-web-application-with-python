@@ -51,6 +51,7 @@ class WorkerThread(Thread):
             response_body: bytes
             response_line: str
 
+            # pathに対応するview関数があれば、関数を取得して呼び出し、レスポンスを生成する
             if path in self.URL_VIEW:
                 view = self.URL_VIEW[path]
                 response_body, response_line = view(method, path, http_version, request_header, request_body)
