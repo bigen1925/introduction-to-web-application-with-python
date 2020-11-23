@@ -57,6 +57,7 @@ def parameters(request: HTTPRequest) -> HTTPResponse:
     # GETリクエストの場合は、405を返す
     if request.method == "GET":
         body = b"<html><body><h1>405 Method Not Allowed</h1></body></html>"
+        content_type = "text/html; charset=UTF-8"
         status_code = 405
 
     elif request.method == "POST":
@@ -71,5 +72,6 @@ def parameters(request: HTTPRequest) -> HTTPResponse:
         """
         body = textwrap.dedent(html).encode()
         content_type = "text/html; charset=UTF-8"
+        status_code = 200
 
-    return HTTPResponse(body=body, content_type=content_type, status_code=200)
+    return HTTPResponse(body=body, content_type=content_type, status_code=status_code)

@@ -48,7 +48,7 @@ chapters:
   - threading.md
   - dynamic-response-generation.md
   - post-parameters.md
-  - draft3.md
+  - response-request-view.md
   - draft4.md
   - draft5.md
   - draft6.md

@@ -76,7 +76,7 @@ class WorkerThread(Thread):
                 try:
                     response_body = self.get_static_file_content(request.path)
                     content_type = None
-                    response = HTTPResponse(body=response_body, status_code=200)
+                    response = HTTPResponse(body=response_body, content_type=content_type, status_code=200)
 
                 except OSError:
                     # レスポンスを取得できなかった場合は、ログを出力して404を返す
@@ -84,7 +84,7 @@ class WorkerThread(Thread):
 
                     response_body = b"<html><body><h1>404 Not Found</h1></body></html>"
                     content_type = "text/html;"
-                    response = HTTPResponse(body=response_body, status_code=404)
+                    response = HTTPResponse(body=response_body, content_type=content_type, status_code=404)
 
             # レスポンスラインを生成
             response_line = self.build_response_line(response)
