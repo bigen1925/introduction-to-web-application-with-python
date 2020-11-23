@@ -6,6 +6,9 @@ from typing import Tuple
 
 
 def now() -> Tuple[bytes, str]:
+    """
+    現在時刻を表示するHTMLを生成する
+    """
     html = f"""\
         <html>
         <body>
@@ -28,6 +31,9 @@ def show_request(
     request_header: dict,
     request_body: bytes,
 ) -> Tuple[bytes, str]:
+    """
+    HTTPリクエストの内容を表示するHTMLを生成する
+    """
     html = f"""\
         <html>
         <body>
@@ -55,6 +61,11 @@ def parameters(
     method: str,
     request_body: bytes,
 ) -> Tuple[bytes, str]:
+    """
+    POSTパラメータを表示するHTMLを表示する
+    """
+
+    # GETリクエストの場合は、405を返す
     if method == "GET":
         response_body = b"<html><body><h1>405 Method Not Allowed</h1></body></html>"
         response_line = "HTTP/1.1 405 Method Not Allowed\r\n"
