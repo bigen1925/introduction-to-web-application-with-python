@@ -29,7 +29,7 @@ class WorkerThread(Thread):
     }
 
     # pathとview関数の対応
-    URL_VIEW: Dict[str, Callable[[HTTPRequest], HTTPResponse]] = {
+    URL_VIEW = {
         "/now": views.now,
         "/show_request": views.show_request,
         "/parameters": views.parameters,
