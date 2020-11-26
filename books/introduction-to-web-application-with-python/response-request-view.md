@@ -294,21 +294,13 @@ HTTPリクエストがたくさんの情報を持っていること自体は逃�
 
 ## ソースコード
 すこし変更量は増えますが、一気にいってしまいましょう。
-`study`の下に**`henango`というディレクトリを新規作成**し、**さらにその下に`http`というディレクトリを作成**し、以下の4ファイルを追加します。
-
-**`study/henango/__init__.py`**
-https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter16-3/henango/__init__.py
-
-
-**`study/henango/http/__init__.py`**
-https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter16-3/henango/http/__init__.py
+`study`の下に**`henango`というディレクトリを新規作成**し、**さらにその下に`http`というディレクトリを作成**し、以下の2ファイルを追加します。
 
 **`study/henango/http/request.py`**
 https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter16-3/henango/http/request.py
 
 **`study/henango/http/response.py`**
 https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter16-3/henango/http/response.py
-
 
 ----
 
@@ -328,25 +320,6 @@ https://github.com/bigen1925/introduction-to-web-application-with-python/blob/ma
 今回新しく作るHTTPリクエスト/レスポンスを表すクラスを始め、今後追加していく共通機能はこのモジュール内に作っていきます。
 
 なお、`webserver.py`や`woerkerthread.py`もこの`henango`モジュールに入っているべきなのですが、そちらのリファクタリングはまた後ほど取り扱います。
-
-### `study/henango/__init__.py`
-### `study/henango/http/__init__.py`
-
-```python
-
-```
-
-これらは、空のファイルです。
-`henango`と`http`というディレクトリが、pythonのパッケージであることを示すために必要なファイルです。
-
-このファイルがあることで、外部のモジュールから
-```python
-from henango.http.requset import HTTPRequest
-```
-
-といったドットを使った表記でインポートすることが可能になります。
-
-モジュールやインポートについては詳細は込み入ってしまうので、おまじないだと思って作っていただくか、[公式リファレンス](https://docs.python.org/ja/3/tutorial/modules.html) を参照してください。
 
 
 ### `study/henango/http/request.py`
