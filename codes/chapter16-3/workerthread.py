@@ -4,7 +4,7 @@ import traceback
 from datetime import datetime
 from socket import socket
 from threading import Thread
-from typing import Tuple, Callable, Dict
+from typing import Tuple
 
 import views
 from henango.http.request import HTTPRequest

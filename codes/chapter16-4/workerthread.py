@@ -4,12 +4,11 @@ import traceback
 from datetime import datetime
 from socket import socket
 from threading import Thread
-from typing import Tuple, Callable, Dict
+from typing import Tuple
 
-import views
-from urls import URL_VIEW
 from henango.http.request import HTTPRequest
 from henango.http.response import HTTPResponse
+from urls import URL_VIEW
 
 
 class WorkerThread(Thread):
