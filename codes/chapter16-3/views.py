@@ -3,8 +3,8 @@ import urllib.parse
 from datetime import datetime
 from pprint import pformat
 
-from http.request import HTTPRequest
-from http.response import HTTPResponse
+from henango.http.request import HTTPRequest
+from henango.http.response import HTTPResponse
 
 
 def now(request: HTTPRequest) -> HTTPResponse:

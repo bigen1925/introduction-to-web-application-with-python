@@ -294,16 +294,21 @@ HTTPリクエストがたくさんの情報を持っていること自体は逃�
 
 ## ソースコード
 すこし変更量は増えますが、一気にいってしまいましょう。
-`study`の下に`http`というディレクトリを作成し、以下の3ファイルを追加します。
+`study`の下に**`henango`というディレクトリを新規作成**し、**さらにその下に`http`というディレクトリを作成**し、以下の4ファイルを追加します。
 
-**`study/http/request.py`**
-https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter16-3/http/request.py
+**`study/henango/__init__.py`**
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter16-3/henango/__init__.py
 
-**`study/http/response.py`**
-https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter16-3/http/response.py
 
-**`study/http/__init__.py`**
-https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter16-3/http/__init__.py
+**`study/henango/http/__init__.py`**
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter16-3/henango/http/__init__.py
+
+**`study/henango/http/request.py`**
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter16-3/henango/http/request.py
+
+**`study/henango/http/response.py`**
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter16-3/henango/http/response.py
+
 
 ----
 
@@ -317,7 +322,34 @@ https://github.com/bigen1925/introduction-to-web-application-with-python/blob/ma
 
 ## 解説
 
-### `study/http/request.py`
+今回から、現在作っているWebアプリケーションのうち、Webサービスの内容に依存しない共通機能部分（メディアであろうが、社内ツールであろうが、どんなWebサービスであったとしても使い回せる部分 = **一般にWebフレームワークと呼ばれる部分**）をひとまとめのモジュールとし、**`henango`**と名付けました。
+由来は、もちろん *「へなちょこDjango」* です。
+
+今回新しく作るHTTPリクエスト/レスポンスを表すクラスを始め、今後追加していく共通機能はこのモジュール内に作っていきます。
+
+なお、`webserver.py`や`woerkerthread.py`もこの`henango`モジュールに入っているべきなのですが、そちらのリファクタリングはまた後ほど取り扱います。
+
+### `study/henango/__init__.py`
+### `study/henango/http/__init__.py`
+
+```python
+
+```
+
+これらは、空のファイルです。
+`henango`と`http`というディレクトリが、pythonのパッケージであることを示すために必要なファイルです。
+
+このファイルがあることで、外部のモジュールから
+```python
+from .http.requset import HTTPRequest
+```
+
+といったドットを使った表記でインポートすることが可能になります。
+
+モジュールやインポートについては詳細は込み入ってしまうので、おまじないだと思って作っていただくか、[公式リファレンス](https://docs.python.org/ja/3/tutorial/modules.html) を参照してください。
+
+
+### `study/henango/http/request.py`
 ```python
 class HTTPRequest:
     path: str
@@ -337,9 +369,10 @@ class HTTPRequest:
         self.http_version = http_version
         self.headers = headers
         self.body = body
+
 ```
 HTTPリクエストに関するデータを格納するクラスです。
-これまで5つのデータ（`method`, `path`, `http_version`, `request_header`, `request_body`）はバラバラの変数として扱っていましたが、このクラスを容易することで`request.method`,`request.path`などと扱えるようになり見通しがよくなります。
+これまで5つのデータ（`method`, `path`, `http_version`, `request_header`, `request_body`）はバラバラの変数として扱っていましたが、このクラスを用意することで`request.method`,`request.path`などと扱えるようになり見通しがよくなります。
 
 辞書型であるはずの`headers`のデフォルト値に`None`を使っているのはpythonの仕様上のテクニックで、詳しくは[公式のチュートリアル](https://docs.python.org/ja/3/tutorial/controlflow.html#tut-defining) を参照してください。
 
@@ -362,7 +395,7 @@ print(request.path)  # "/index.html"
 
 このクラスを利用することで、今までview関数が5つのパラメータを受け取っていたところが1つのパラメータでまとめて受け取れるようになります。
 
-### `study/http/response.py`
+### `study/henango/http/response.py`
 
 ```python
 from typing import Optional
@@ -386,25 +419,7 @@ class HTTPResponse:
 
 リクエストと同じく、view関数から値を返す際に使われます。
 
-### `study/http/__init__.py`
-
-```python
-
-```
-
-こちらは、空のファイルです。
-`http`というディレクトリが、pythonのパッケージであることを示すために必要なファイルです。
-
-このファイルがあることで、外部のモジュールから
-```python
-http.requset import HTTPRequest
-```
-
-といった表記でインポートすることが可能になります。
-
-モジュールやインポートについては詳細は込み入ってしまうので、おまじないだと思って作っていただくか、[公式リファレンス](https://docs.python.org/ja/3/tutorial/modules.html) を参照してください。
-
-### `study/http/views.py`
+### `study/henango/http/views.py`
 
 #### 9-75行目
 ```python
@@ -438,7 +453,7 @@ view関数の引数と返り値の型を変更しています。
 
 なお上記では省略していますが、引数が変わったことにより関数内でのパラメータの参照の仕方も`path` => `request.path`などのように変更しています。
 
-### `study/http/workerthread.py`
+### `study/henango/http/workerthread.py`
 こちらのファイルも色々な箇所が変わりました。
 重要な場所から見ていきます。
 

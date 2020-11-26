@@ -7,8 +7,8 @@ from threading import Thread
 from typing import Tuple, Callable, Dict
 
 import views
-from http.request import HTTPRequest
-from http.response import HTTPResponse
+from henango.http.request import HTTPRequest
+from henango.http.response import HTTPResponse
 
 
 class WorkerThread(Thread):
