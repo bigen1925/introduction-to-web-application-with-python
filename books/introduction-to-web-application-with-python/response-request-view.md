@@ -368,6 +368,27 @@ print(request.path)  # "/index.html"
 
 このクラスを利用することで、今までview関数が5つのパラメータを受け取っていたところが1つのパラメータでまとめて受け取れるようになります。
 
+:::details コラム: python中級者向け @dataclass
+上記のように、いくつかのデータをまとめて持ち運びたいがためにクラスを生成することはよくあります。
+その場合、`__init__()`メソッドにいつも似たような記述をする必要があり、億劫に感じることがあるでしょう。
+
+python3.7からは、このようなケースに対応する便利なデコレータ`@dataclass`が導入され、`HTTPRequest`は次のように非常に短く書くことができます。
+```python
+from dataclasses import dataclass, field
+
+
+@dataclass
+class HTTPRequest:
+    path: str
+    method: str
+    http_version: str
+    headers: dict = field(default_factory=dict)
+    body: bytes
+```
+
+本書ではpython特有の記法を習得することは目的ではないため敢えて冗長な書き方をしていますが、もし一流のpythonistaを目指している人であれば覚えておいて損はないと思います。
+:::
+
 ### `study/henango/http/response.py`
 
 ```python
