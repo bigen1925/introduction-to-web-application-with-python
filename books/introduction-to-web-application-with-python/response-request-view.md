@@ -341,7 +341,7 @@ https://github.com/bigen1925/introduction-to-web-application-with-python/blob/ma
 
 このファイルがあることで、外部のモジュールから
 ```python
-from .http.requset import HTTPRequest
+from henango.http.requset import HTTPRequest
 ```
 
 といったドットを使った表記でインポートすることが可能になります。
