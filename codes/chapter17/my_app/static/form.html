@@ -1,0 +1,33 @@
+<html>
+<body>
+<form action="/parameters" method="post">
+  テキストボックス: <input name="text_name" type="text"/> <br>
+  パスワード: <input name="password_name" type="password"/> <br>
+  テキストエリア: <br>
+  <textarea cols="40" name="text_area_name" rows="4"></textarea>
+  <table border="1">
+    <tr>
+      <td>
+        ラジオボタン: <br>
+        <input name="radio_name" type="radio" value="radio1">1
+        <input name="radio_name" type="radio" value="radio2">2
+        <input name="radio_name" type="radio" value="radio3">3
+        <input name="radio_name" type="radio" value="radio4">4
+      </td>
+    </tr>
+    <tr>
+      <td>
+        チェックボックス: <br>
+        <input name="check_name" type="checkbox" value="check1">1
+        <input name="check_name" type="checkbox" value="check2">2
+        <input name="check_name" type="checkbox" value="check3">3
+        <input name="check_name" type="checkbox" value="check4">4
+      </td>
+    </tr>
+  </table>
+  <input name="hidden_name" type="hidden" value="hidden_value_日本語"/>
+  ファイルアップロード: <input name="file_name" type="file"><br>
+  <input name="submit_name" type="submit" value="送信">
+</form>
+</body>
+</html>
