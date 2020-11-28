@@ -16,8 +16,6 @@ class WorkerThread(Thread):
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     # 静的配信するファイルを置くディレクトリ
     STATIC_ROOT = os.path.join(BASE_DIR, "static")
-    # 静的ファイルを配信するパスのprefix
-    STATIC_URL = "/static/"
 
     # 拡張子とMIME Typeの対応
     MIME_TYPES = {
