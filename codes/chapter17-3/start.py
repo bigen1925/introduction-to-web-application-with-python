@@ -1,4 +1,4 @@
-from webserver import WebServer
+from henango.server.server import Server
 
 if __name__ == "__main__":
     WebServer().serve()

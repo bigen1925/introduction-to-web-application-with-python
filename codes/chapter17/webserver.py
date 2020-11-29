@@ -1,9 +1,9 @@
 import socket
 
-from .worker import Worker
+from workerthread import WorkerThread
 
 
-class Server:
+class WebServer:
     """
     Webサーバーを表すクラス
     """
@@ -26,7 +26,7 @@ class Server:
                 print(f"=== Server: クライアントとの接続が完了しました remote_address: {address} ===")
 
                 # クライアントを処理するスレッドを作成
-                thread = Worker(client_socket, address)
+                thread = WorkerThread(client_socket, address)
                 # スレッドを実行
                 thread.start()
 

@@ -6,18 +6,16 @@ from socket import socket
 from threading import Thread
 from typing import Tuple
 
-from ..http.request import HTTPRequest
-from ..http.response import HTTPResponse
-from ...urls import URL_VIEW
+from henango.http.request import HTTPRequest
+from henango.http.response import HTTPResponse
+from urls import URL_VIEW
 
 
-class Worker(Thread):
+class WorkerThread(Thread):
     # 実行ファイルのあるディレクトリ
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     # 静的配信するファイルを置くディレクトリ
     STATIC_ROOT = os.path.join(BASE_DIR, "static")
-    # 静的ファイルを配信するパスのprefix
-    STATIC_URL = "/static/"
 
     # 拡張子とMIME Typeの対応
     MIME_TYPES = {

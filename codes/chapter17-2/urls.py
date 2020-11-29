@@ -1,4 +1,4 @@
-from . import views
+import views
 
 # pathとview関数の対応
 URL_VIEW = {
