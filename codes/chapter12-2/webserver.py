@@ -90,7 +90,7 @@ class WebServer:
                         ext = ""
                     # 拡張子からMIME Typeを取得
                     # 知らない対応していない拡張子の場合はoctet-streamとする
-                    mime_type = self.MIME_TYPES.get(ext, "application/octet-stream")
+                    content_type = self.MIME_TYPES.get(ext, "application/octet-stream")
 
                     # レスポンスヘッダーを生成
                     response_header = ""
@@ -98,7 +98,7 @@ class WebServer:
                     response_header += "Host: HenaServer/0.1\r\n"
                     response_header += f"Content-Length: {len(response_body)}\r\n"
                     response_header += "Connection: Close\r\n"
-                    response_header += f"Content-Type: {mime_type}\r\n"
+                    response_header += f"Content-Type: {content_type}\r\n"
 
                     # レスポンス全体を生成する
                     response = (response_line + response_header + "\r\n").encode() + response_body
