@@ -6,10 +6,10 @@ from socket import socket
 from threading import Thread
 from typing import Tuple
 
+import settings
 from henango.http.request import HTTPRequest
 from henango.http.response import HTTPResponse
 from urls import URL_VIEW
-import settings
 
 
 class Worker(Thread):

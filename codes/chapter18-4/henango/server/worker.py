@@ -1,6 +1,7 @@
 import os
 import re
 import traceback
+import urllib.parse
 from datetime import datetime
 from socket import socket
 from threading import Thread
@@ -9,7 +10,6 @@ from typing import Tuple
 import settings
 from henango.http.request import HTTPRequest
 from henango.http.response import HTTPResponse
-from henango.urls.resolver import URLResolver
 from urls import url_patterns
 
 
@@ -54,14 +54,17 @@ class Worker(Thread):
             # HTTPリクエストをパースする
             request = self.parse_http_request(request_bytes)
 
-            # URL解決を試みる
-            view = URLResolver().resolve(request)
+            # pathにマッチするurl_patternを探し、見つかればviewからレスポンスを生成する
+            for url_pattern in url_patterns:
+                match = url_pattern.match(request.path)
+                if match:
+                    request.params.update(match.groupdict())
+                    view = url_pattern.view
+                    response = view(request)
+                    break
 
-            if view:
-                # URL解決できた場合は、viewからレスポンスを取得する
-                response = view(request)
+            # pathにマッチするurl_patternが見つからなければ、静的ファイルからレスポンスを生成する
             else:
-                # URL解決できなかった場合は、静的ファイルからレスポンスを取得する
                 try:
                     response_body = self.get_static_file_content(request.path)
                     content_type = None
@@ -113,13 +116,25 @@ class Worker(Thread):
         # リクエストラインを文字列に変換してパースする
         method, path, http_version = request_line.decode().split(" ")
 
+        params = {}
+        # クエリパラメータの取得
+        if "?" in path:
+            path, query = path.split("?", maxsplit=1)
+            query_params = urllib.parse.parse_qs(query)
+            params.update(query_params)
+
+        # POSTパラメータの取得
+        if method == "POST":
+            post_params = urllib.parse.parse_qs(request_body.decode())
+            params.update(post_params)
+
         # リクエストヘッダーを辞書にパースする
         headers = {}
         for header_row in request_header.decode().split("\r\n"):
             key, value = re.split(r": *", header_row, maxsplit=1)
             headers[key] = value
 
-        return HTTPRequest(method=method, path=path, http_version=http_version, headers=headers, body=request_body)
+        return HTTPRequest(method=method, path=path, http_version=http_version, headers=headers, body=request_body, params=params)
 
     def get_static_file_content(self, path: str) -> bytes:
         """

@@ -1,5 +1,4 @@
 import textwrap
-import urllib.parse
 from datetime import datetime
 from pprint import pformat
 
@@ -61,12 +60,11 @@ def parameters(request: HTTPRequest) -> HTTPResponse:
         status_code = 405
 
     elif request.method == "POST":
-        post_params = urllib.parse.parse_qs(request.body.decode())
         html = f"""\
             <html>
             <body>
                 <h1>Parameters:</h1>
-                <pre>{pformat(post_params)}</pre>                        
+                <pre>{pformat(request.params)}</pre>                        
             </body>
             </html>
         """
@@ -77,13 +75,12 @@ def parameters(request: HTTPRequest) -> HTTPResponse:
     return HTTPResponse(body=body, content_type=content_type, status_code=status_code)
 
 
-def user_profile(request: HTTPRequest) -> HTTPResponse:
-    user_id = request.params["user_id"]
+def user(request: HTTPRequest) -> HTTPResponse:
+    name = request.params["name"]
     html = f"""\
         <html>
         <body>
-            <h1>プロフィール</h1>
-            <p>ID: {user_id}
+            <h1>ようこそ、{name} さん！</h1>
         </body>
         </html>
     """

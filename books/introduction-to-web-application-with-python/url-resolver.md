@@ -212,8 +212,8 @@ pathから目当てのviewを取得する処理（＝**URL解決**）だけで�
 `henango`モジュールの下に、URL処理に関する機能をまとめた`urls`モジュールを作成しています。
 `urls.py`というプロジェクト直下のファイルと同じ名前のモジュールでややこしいのですが、`Django`ではこのような名前になっていますので、リスペクトを込めてあえて同じにしています。
 
-**`study/henango/urls/resolver.py`**
-https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter18-2/henango/urls/resolver.py
+**`study/henango/urls/pattern.py`**
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter18-2/henango/urls/pattern.py
 
 **`study/urls.py`**
 https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter18-2/urls.py
@@ -222,7 +222,7 @@ https://github.com/bigen1925/introduction-to-web-application-with-python/blob/ma
 https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter18-2/henango/server/worker.py
 
 ## 解説
-### `study/henango/urls/resolver.py`
+### `study/henango/urls/pattern.py`
 ```python
 import re
 from re import Match
@@ -241,10 +241,81 @@ class URLPattern:
         self.view = view
 
     def match(self, path: str) -> Optional[Match]:
-        # URLパターンを正規表現パターンへ変換
-        # ex) '/user/<user_id>/profile' => '/user/(?P<user_id>[^/]+)'
+        # URLパターンを正規表現パターンに変換する
+        # ex) '/user/<user_id>/profile' => '/user/(?P<user_id>[^/]+)/profile'
         pattern = re.sub(r"<(.+?)>", r"(?P<\1>[^/]+)", self.pattern)
-
         return re.match(pattern, path)
 
 ```
+attributeとしてURLパターンとview関数を持ち、`.match(path)`メソッドでpathとのマッチング判定ができるクラスです。
+
+内容自体は単純だと思いますが、型注釈について補足しておきます。
+
+`Callable[[HTTPRequest], HTTPResponse]`は関数を表す型注釈で、この場合は`HTTPRequest`インスタンスを受け取り、`HTTPResponse`を返す関数を意味します。
+
+また、`Optional[Match]`は、「`Match`インスタンス、または`None`」を表す型です。
+
+:::details コラム：pythonのCallable
+便宜上`Callable`のことを「関数」と説明しましたが、厳密には「呼び出し可能オブジェクト」を意味します。
+単純なスクリプトでは違いを覚える必要はありませんが、pythonistaを目指す方はきちんと理解しておく必要があるでしょう。
+
+「呼び出し可能オブジェクト」は、オブジェクトの後ろに`()`を付けて特定の処理を呼び出せるオブジェクト全般のことで、関数は呼び出し可能オブジェクトの一種です。
+
+このように言うということは、関数以外にも「呼び出し可能オブジェクト」はあるということです。
+
+関数以外のCallableの代表例としては、「クラス」があります。
+「クラス」の後ろに`()`をつけて「呼び出す」ことでインスタンス生成を行うことができます。
+
+クラスは分かりやすい例ですが、他にも`__call__`メソッドが実装されたクラスのインスタンスがあります。
+`__call__`を使うと、「関数として定義したわけではないが、まるで関数のように振る舞うオブジェクト」を作ることができます。
+
+知らなかった方は、是非調べてみると良いでしょう。
+:::
+
+### `study/urls.py`
+
+```python
+import views
+from henango.urls.pattern import URLPattern
+
+# pathとview関数の対応
+url_patterns = [
+    URLPattern("/now", views.now),
+    URLPattern("/show_request", views.show_request),
+    URLPattern("/parameters", views.parameters),
+    URLPattern("/user/<user_id>/profile", views.user_profile),
+]
+
+```
+これまで`URL_VIEW`という「辞書」でルーティングを管理していましたが、要素のひとつひとつが`URLPattern`インスタンスとなり、キーも不要になったため「リスト」に変更しました。
+また、要素のクラス名にあわせて、変数名を`url_patterns`に変更しています。
+
+（ますますDjangoっぽくなってきましたね）
+
+### `study/henango/server/worker.py`
+
+#### 56-63行目
+```python
+            # pathにマッチするurl_patternを探し、見つかればviewからレスポンスを生成する
+            for url_pattern in url_patterns:
+                match = url_pattern.match(request.path)
+                if match:
+                    request.params.update(match.groupdict())
+                    view = url_pattern.view
+                    response = view(request)
+                    break
+```
+これまで`URL_VIEW`だったところが`url_patterns`に変更になっています。
+
+また、url_patternとpathのマッチング判定を`Worker`内のメソッドでやっていたところを、url_patternオブジェクト自身にやらせるようにしました。
+
+これで、WorkerはURLのマッチング方法について何も知らなくてよくなり、責務が軽くなりました。
+
+## 動作確認
+リファクタリングですので機能に変更はありませんが、こまめに動作確認はしておきましょう。
+`http://localhost:8080/user/123/profile` にアクセスしてエラーがないか確認しておいてください。
+
+# リファクタリング2
+マッチング判定を外部モジュールに切り出せたのはいいですが、URL解決処理はまだまだworkerに残っています。
+
+残っている部分も頑張って外部モジュールへ移していきましょう
