@@ -346,6 +346,11 @@ from urls import url_patterns
 
 class URLResolver:
     def resolve(self, request: HTTPRequest) -> Optional[Callable[[HTTPRequest], HTTPResponse]]:
+        """
+        URL解決を行う
+        pathにマッチするURLパターンが存在した場合は、対応するviewを返す
+        存在しなかった場合は、Noneを返す
+        """
         for url_pattern in url_patterns:
             match = url_pattern.match(request.path)
             if match:
@@ -355,3 +360,35 @@ class URLResolver:
         return None
 
 ```
+以前まで`Worker`でやっていたURL解決の処理だけ切り出したクラスとなります。
+
+処理の内容は変わっていないので、難しいところはないかと思います。
+
+### `study/henango/server/worker.py`
+### 57-64行目
+```python
+            # URL解決を試みる
+            view = URLResolver().resolve(request)
+
+            if view:
+                # URL解決できた場合は、viewからレスポンスを取得する
+                response = view(request)
+            else:
+                # URL解決できなかった場合は、静的ファイルからレスポンスを取得する
+```
+
+URL解決のための処理が外部に切り出せたおかげで、`Worker`クラスはURL解決の方法について何も知らなくて良くなり、また一つ責務が減りました。
+
+かなり見通しが良くなって来たのではないでしょうか？
+
+## 動作確認をする
+本設も同じくリファクタリングなので機能変更はありませんが、またサーバーを再起動して `http://localhost:8080/user/123/profile` にアクセスして動作確認をしておいてください。
+
+
+# リファクタリング STEP3 静的ファイルの処理をview化する
+URL解決に関する処理はかなり切り出せたのですが、まだ静的ファイルに関する処理だけが残ってしまっています。
+うまく切り出せなかったのは、静的ファイルのレスポンス生成と、他のURLのレスポンス生成ではインターフェースが違う（requestを渡したらresponseが返ってくる、と単純化されてない）ため、うまく共通化できなかったからです。
+
+というわけで、静的レスポンス生成処理もview化することで、共通化してURL解決を外部モジュールへ追いやってしまいましょう。
+
+## ソースコード

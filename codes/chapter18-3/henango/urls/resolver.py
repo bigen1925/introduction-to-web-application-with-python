@@ -9,8 +9,8 @@ class URLResolver:
     def resolve(self, request: HTTPRequest) -> Optional[Callable[[HTTPRequest], HTTPResponse]]:
         """
         URL解決を行う
-        :param request:
-        :return:
+        pathにマッチするURLパターンが存在した場合は、対応するviewを返す
+        存在しなかった場合は、Noneを返す
         """
         for url_pattern in url_patterns:
             match = url_pattern.match(request.path)
