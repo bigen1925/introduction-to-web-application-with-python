@@ -15,8 +15,7 @@ class URLPattern:
         self.view = view
 
     def match(self, path: str) -> Optional[Match]:
-        # URLパターンを正規表現パターンへ変換
-        # ex) '/user/<user_id>' => '/user/(?P<user_id>[^/]+)'
+        # URLパターンを正規表現パターンに変換する
+        # ex) '/user/<user_id>/profile' => '/user/(?P<user_id>[^/]+)/profile'
         pattern = re.sub(r"<(.+?)>", r"(?P<\1>[^/]+)", self.pattern)
-
         return re.match(pattern, path)
