@@ -77,12 +77,13 @@ def parameters(request: HTTPRequest) -> HTTPResponse:
     return HTTPResponse(body=body, content_type=content_type, status_code=status_code)
 
 
-def user(request: HTTPRequest) -> HTTPResponse:
-    name = request.params["name"]
+def user_profile(request: HTTPRequest) -> HTTPResponse:
+    user_id = request.params["user_id"]
     html = f"""\
         <html>
         <body>
-            <h1>ようこそ、{name} さん！</h1>
+            <h1>プロフィール</h1>
+            <p>ID: {user_id}
         </body>
         </html>
     """

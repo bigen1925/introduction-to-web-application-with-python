@@ -1,16 +1,15 @@
 import os
 import re
 import traceback
-import urllib.parse
 from datetime import datetime
 from socket import socket
 from threading import Thread
 from typing import Tuple
 
+import settings
 from henango.http.request import HTTPRequest
 from henango.http.response import HTTPResponse
 from urls import url_patterns
-import settings
 
 
 class Worker(Thread):
