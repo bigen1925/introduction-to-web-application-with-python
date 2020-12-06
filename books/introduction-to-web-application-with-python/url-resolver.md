@@ -162,7 +162,7 @@ class HTTPRequest:
 
 今までは単純に`URL_VIEW`辞書のキーとpathが文字列として一致するかどうかでviewを検索していましたが、今回からは判定ロジックが複雑になるため`self.url_match()`というメソッドを新しく作成してその中で判定するようにしました。
 
-`url_match()`の詳細は次に説明しますが、この関数はurl_patternがpathにマッチした場合は正規表現でお馴染みの`re`モジュールの`Match`オブジェクトを返します。
+`url_match()`の詳細は次に説明しますが、この関数はurl_patternがpathにマッチした場合は正規表現でお馴染みの`re`の`Match`オブジェクトを返します。
 URLパラメータが含まれている場合は`.groupdict()`メソッドを実行することでパラメータが辞書で取得できます。
 
 マッチしなかった場合は`None`を返すので、if文は実行されません。
@@ -209,8 +209,8 @@ pathから目当てのviewを取得する処理（＝**URL解決**）だけで�
 色々なやり方がありますが、本書ではpathとviewの組み合わせの情報をオブジェクト化し、そのオブジェクト内にマッチング判定機能も持たせてしまうことにします。
 
 ## ソースコード
-`henango`モジュールの下に、URL処理に関する機能をまとめた`urls`モジュールを作成しています。
-`urls.py`というプロジェクト直下のファイルと同じ名前のモジュールでややこしいのですが、`Django`ではこのような名前になっていますので、リスペクトを込めてあえて同じにしています。
+`henango`パッケージの下に、URL処理に関する機能をまとめた`urls`パッケージを作成しています。
+`urls.py`というプロジェクト直下のファイルと同じ名前のパッケージでややこしいのですが、`Django`ではこのような名前になっていますので、リスペクトを込めてあえて同じにしています。
 
 **`study/henango/urls/pattern.py`**
 https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter18-2/henango/urls/pattern.py
@@ -392,3 +392,99 @@ URL解決に関する処理はかなり切り出せたのですが、まだ静�
 というわけで、静的レスポンス生成処理もview化することで、共通化してURL解決を外部モジュールへ追いやってしまいましょう。
 
 ## ソースコード
+`henango`パッケージの下に、フレームワークが利用するviewをいれる`views`パッケージを作成しました。
+今回作成する`static view`はユーザーが追加するものではなく、フレームワークが予め用意しておくviewにあたりますので、`henango`パッケージの中にいれてしまいたかったからです。
+
+**`study/henango/views/static.py`**
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter18-4/henango/views/static.py
+
+**`study/henango/url/resolver.py`**
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter18-4/henango/urls/resolver.py
+
+**`study/henango/server/worker.py`**
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter18-3/henango/server/worker.py
+
+## 解説
+### `study/henango/views/static.py`
+```python
+import os
+import traceback
+
+import settings
+from henango.http.request import HTTPRequest
+from henango.http.response import HTTPResponse
+
+
+def static(request: HTTPRequest) -> HTTPResponse:
+    """
+    静的ファイルからレスポンスを取得する
+    """
+
+    try:
+        static_root = getattr(settings, "STATIC_ROOT")
+
+        # pathの先頭の/を削除し、相対パスにしておく
+        relative_path = request.path.lstrip("/")
+        # ファイルのpathを取得
+        static_file_path = os.path.join(static_root, relative_path)
+
+        with open(static_file_path, "rb") as f:
+            response_body = f.read()
+
+        content_type = None
+        return HTTPResponse(body=response_body, content_type=content_type, status_code=200)
+
+    except OSError:
+        # ファイルを取得できなかった場合は、ログを出力して404を返す
+        traceback.print_exc()
+
+        response_body = b"<html><body><h1>404 Not Found</h1></body></html>"
+        content_type = "text/html;"
+        return HTTPResponse(body=response_body, content_type=content_type, status_code=404)
+```
+`Worker`でやっていた静的ファイルからレスポンスを生成する処理をお引越ししてきました。
+
+一点変更を加えているのは、ファイルをopenする処理は`get_static_file_content`というメソッドに切り出していましたが、このviewだけで見るとそれほど煩雑でもないのでまとめてしまっている点です。
+
+
+### `study/henango/url/resolver.py`
+#### 10-22行目
+```python
+class URLResolver:
+    def resolve(self, request: HTTPRequest) -> Callable[[HTTPRequest], HTTPResponse]:
+        # ...
+
+        return static
+
+```
+
+`url_patterns`から対応するURLパターンが見つからなかった場合、これまでNoneを返していたところ、static viewを返すように変更しました。
+静的ファイルに関する処理のインターフェースをview関数と同じに揃えたことで、このように他のviewと同じように扱えるようになりました。
+
+型注釈を変更するのも忘れないでください。
+
+### `study/henango/server/worker.py`
+### 54-58行目
+```python
+            # URL解決を行う
+            view = URLResolver().resolve(request)
+
+            # レスポンスを生成する
+            response = view(request)
+```
+
+どうでしょう！
+URL解決に関する処理がすべて外部に切り出せました。
+これで`Worker`の見通しはかなり良くなりましたね。
+
+本書の進行の都合上、これまで`Worker`は色々な責務を一手に担ってきましたが、今となってはシンプルに
+
+- クライアントとのコネクションを管理する
+- HTTPリクエスト/HTTPレスポンスの「名前データ <=> オブジェクト」の変換処理を行う
+
+のみとなっていることが分かると思います。
+
+## 動作確認
+最後に、ここでも動作確認をするのを忘れないようにしてください。
+
+リファクタリングとはいえ、ソフトウェアというのはいつどこで動かなくなるかわかったものではありませんから・・・
