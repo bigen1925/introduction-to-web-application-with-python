@@ -199,7 +199,7 @@ URLパターンは私達独自の記法ですので、そのままではpython�
 
 うまく表示された人は、`123`の部分を変えてみて、URLに合わせて画面表示が変わることも確認しておきましょう。
 
-# リファクタリング　STEP1
+# リファクタリング STEP1 URLマッチング判定
 最近リファクタリングしたばっかりですが、`worker.py`の責務がまた増えて複雑になってしまったので、またリファクタリングしておきましょう。
 これぐらいの規模になると、機能追加とリファクタリングはセットになってきますね。
 
@@ -241,10 +241,15 @@ class URLPattern:
         self.view = view
 
     def match(self, path: str) -> Optional[Match]:
+        """
+        pathがURLパターンにマッチするか判定する
+        マッチした場合はMatchオブジェクトを返し、マッチしなかった場合はNoneを返す
+        """
         # URLパターンを正規表現パターンに変換する
         # ex) '/user/<user_id>/profile' => '/user/(?P<user_id>[^/]+)/profile'
         pattern = re.sub(r"<(.+?)>", r"(?P<\1>[^/]+)", self.pattern)
         return re.match(pattern, path)
+
 
 ```
 attributeとしてURLパターンとview関数を持ち、`.match(path)`メソッドでpathとのマッチング判定ができるクラスです。
@@ -315,7 +320,38 @@ url_patterns = [
 リファクタリングですので機能に変更はありませんが、こまめに動作確認はしておきましょう。
 `http://localhost:8080/user/123/profile` にアクセスしてエラーがないか確認しておいてください。
 
-# リファクタリング2
+# リファクタリング STEP2 URL解決
 マッチング判定を外部モジュールに切り出せたのはいいですが、URL解決処理はまだまだworkerに残っています。
 
-残っている部分も頑張って外部モジュールへ移していきましょう
+残っているURL解決の部分も頑張って外部モジュールへ移していきましょう。
+
+## ソースコード
+URL解決部分を切り出したのがこちらです。
+
+**`study/henango/urls/resolver.py`**
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter18-3/henango/urls/resolver.py
+
+**`study/henango/server/worker.py`**
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter18-3/henango/server/worker.py
+
+## 解説
+### `study/henango/urls/resolver.py`
+```python
+from typing import Callable, Optional
+
+from henango.http.request import HTTPRequest
+from henango.http.response import HTTPResponse
+from urls import url_patterns
+
+
+class URLResolver:
+    def resolve(self, request: HTTPRequest) -> Optional[Callable[[HTTPRequest], HTTPResponse]]:
+        for url_pattern in url_patterns:
+            match = url_pattern.match(request.path)
+            if match:
+                request.params.update(match.groupdict())
+                return url_pattern.view
+
+        return None
+
+```

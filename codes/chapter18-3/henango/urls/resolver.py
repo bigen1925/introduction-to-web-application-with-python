@@ -7,6 +7,11 @@ from urls import url_patterns
 
 class URLResolver:
     def resolve(self, request: HTTPRequest) -> Optional[Callable[[HTTPRequest], HTTPResponse]]:
+        """
+        URL解決を行う
+        :param request:
+        :return:
+        """
         for url_pattern in url_patterns:
             match = url_pattern.match(request.path)
             if match:
