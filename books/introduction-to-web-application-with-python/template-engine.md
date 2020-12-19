@@ -197,7 +197,7 @@ https://github.com/bigen1925/introduction-to-web-application-with-python/blob/ma
 
 ## 解説
 ### `study/henango/template/renderer.py`
-#### 6-13行目
+#### 6-10行目
 ```python
 def render(template_name: str, context: dict):
     template_path = os.path.join(settings.TEMPLATES_DIR, template_name)
@@ -206,12 +206,223 @@ def render(template_name: str, context: dict):
         template = f.read()
 ```
 
-まず、テンプレートファイルのディレクトリをsettingsに記載した`TEMPLATES_DIR`から取得するように変更しています。
+テンプレートファイルのディレクトリをsettingsに記載した`TEMPLATES_DIR`から取得するように変更しています。
 
 
 ### `study/vies.py`
+#### 16行目
+```python
+    html = render("now.html", context)
+```
+
+テンプレートディレクトリはsettingsで決めることにしたので、viewsではファイル名だけ指定すればOKということになりました。
+これでテンプレートディレクトリを移動させるときも修正が不要で簡便ですね。
+
+
+### `study/settings.py`
+#### 9-10行目
+```python
+# テンプレートファイルを置くディレクトリ
+TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
+```
+
+settingsでテンプレートファイル置き場を指定するようにしました。
+Djangoっぽい！
+
+## 動作確認
+動作確認をお忘れずに！
+
+
+# STEP4: bodyを文字列のまま返せるようにする
+
+さて、ついでなのでHTMLレンダラー以外も少し扱いやすくしておきましょう。
+
+今、htmlを構築したあと、毎回
+```python
+body = html.encode()
+```
+などとしてbytes型へ変換しています。
+
+最終的にsocketに渡す値はbytes型でなくてはならないのでどこかで変換してなくてはならないのですが、毎回これを書くのは億劫です。
+
+なので、最終的にHTTPレスポンスを生成する部分に変換処理を寄せることで共通化してしまいましょう。
+
+## ソースコード
+
+**`study/henango/server/worker.py`**
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter19-4/henango/server/worker.py
+
+**`study/views.py`**
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter19-4/views.py
+
+## 解説
+### `study/henango/server/worker.py`
+#### 66-68行目
+```python
+            # レスポンスボディを変換
+            if isinstance(response.body, str):
+                response.body = response.body.encode()
+```
+
+実際のHTTPレスポンスを生成する処理の直前に、`body`が`str`型だったら`bytes`型へ変換する、という処理を追加しました。
+これで、view関数側ではbodyは`str`型のまま渡してしまって大丈夫になりました。
+
+### `study/views.py`
+#### 17行目
+```python
+#     body = html.encode()
+```
+というわけで、encode処理は削除してしまっています。
+
+## 動作確認
+お忘れずに！僕は言いましたよ！どこから動かなくなったのかわからなくなりますよ！
+
+# STEP5: ステータスコードとContent-Typeにデフォルト値を設定する
+今回は細かくSTEPを切っているので疲れてきたかもしれませんが、これが実質最後です。
+このあとは、他のview関数にも適用していくだけになります。
+
+もう一度view関数を見渡してみると、まだ繰り返し同じことを書いている箇所があります。
+
+```python
+        content_type = "text/html; charset=UTF-8"
+        status_code = 200
+```
+
+こういったステータスコードとContent-Typeの部分ですね。
+
+Webサーバーでは大部分のレスポンスがHTMLであり、レスポンスステータスは200です。
+
+これらはデフォルト値になるようにしておいて、HTMLじゃないものを返したり、200じゃないステータスを返したいときだけ設定すればいいようにしておきましょう。
+
+## ソースコード
+それがこちらです。
+
+**`study/henango/server/worker.py`**
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter19-5/henango/server/worker.py
+
+**`study/henango/http/response.py`**
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter19-5/henango/http/response.py
+
+**`study/views.py`**
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter19-5/views.py
+
+## 解説
+### `study/henango/server/worker.py`
+#### 122-132行目
+```python
+        # Content-Typeが指定されていない場合はpathから特定する
+        if response.content_type is None:
+            # pathから拡張子を取得
+            if "." in request.path:
+                ext = request.path.rsplit(".", maxsplit=1)[-1]
+                # 拡張子からMIME Typeを取得
+                # 知らない対応していない拡張子の場合はoctet-streamとする
+                response.content_type = self.MIME_TYPES.get(ext, "application/octet-stream")
+            else:
+                # pathに拡張子がない場合はhtml扱いとする
+                response.content_type = "text/html; charset=UTF-8"
+```
+HTTPレスポンスのContent-Typeヘッダーを生成している箇所ですが、pathに拡張子がなかった場合はHTML扱いとしました。
+
+本当は下記のようにHTTPResponseオブジェクトのcontent_type属性のデフォルト値として設定したいのですが、本教材では静的ファイル配信の実装方法がちょっと特殊なため、このようにしています。
+
+### `study/henango/http/response.py`
+#### 9行目
+```python
+    def __init__(self, status_code: int = 200, content_type: str = None, body: Union[bytes, str] = b""):
+```
+ちょっと分かり難いかもしれませんが、status_codeが指定されなかった時のデフォルト値として`200`を設定しました。
+
+### `study/views.py`
+#### 15-18行目
 ```python
     context = {"now": datetime.now()}
-    html = render("now", context)
+    body = render("now.html", context)
+
+    return HTTPResponse(body=body)
 ```
+
+`status_code`と`content_type`に関する記述がなくなって、すっきりの極みに到達しましたね！
+
+これで繰り返し同じことを記述していた部分がほぼなくなったといえるでしょう！
+
+# STEP6: 他のviewへ適用していく
+では最後に、他のviewへも適用していきましょう。
+
+
+## ソースコード
+**`study/views.py`**
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter19-6/views.py
+
+**`study/templates/show_request.html`**
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter19-6/templates/show_request.html
+
+**`study/views.py/parameters.html`**
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter19-6/templates/parameters.html
+
+**`study/views.py/user_profile.html`**
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter19-6/templates/user_profile.html
+
+## 解説
+### `study/views.py`
+#### 21-87行目
+```python
+def show_request(request: HTTPRequest) -> HTTPResponse:
+    """
+    HTTPリクエストの内容を表示するHTMLを生成する
+    """
+    context = {"request": request, "headers": pformat(request.headers), "body": request.body.decode("utf-8", "ignore")}
+    body = render("show_request.html", context)
+
+    return HTTPResponse(body=body)
+
+
+def parameters(request: HTTPRequest) -> HTTPResponse:
+    """
+    POSTパラメータを表示するHTMLを表示する
+    """
+
+    # GETリクエストの場合は、405を返す
+    if request.method == "GET":
+        body = b"<html><body><h1>405 Method Not Allowed</h1></body></html>"
+
+        return HTTPResponse(body=body, status_code=405)
+
+    elif request.method == "POST":
+        context = {"params": urllib.parse.parse_qs(request.body.decode())}
+        body = render("parameters.html", context)
+
+        return HTTPResponse(body=body)
+
+
+def user_profile(request: HTTPRequest) -> HTTPResponse:
+    context = {"user_id": request.params["user_id"]}
+
+    body = render("user_profile.html", context)
+
+    return HTTPResponse(body=body)
+
+```
+
+これまでやってきたことを他のview関数にも適用していっただけなので、特に解説は不要かと思います。
+
+
+### `study/templates/show_request.html`
+### `study/views.py/parameters.html`
+### `study/views.py/user_profile.html`
+
+これらも特に解説不要だと思いますので、割愛させてください。
+
+# ところでテンプレートエンジンって？
+さて本章はこれで終わりなのですが、今回みなさんに作ってもらった
+「雛形のHTMLファイルを取得してきて、そこに変数やらなんやらで切ったり貼ったりして、完成品のHTML文字列を生成する」
+という機能を持ったものを、世の中では**テンプレートエンジン**と呼びます。
+
+今回作ったものはそんなテンプレートエンジンの中でも一番簡素なもので、たんに変数の置き換えを行うだけのものでした。
+世の中のテンプレートエンジンは、独自の記法でHTMLを部分的に繰り返し生成（for文のようなもの）することができたり、あるテンプレートファイルが他のテンプレートファイルを読み込めたり、他の豊富な機能を備えています。
+
+しかし、やっていることは「雛形となるファイルを読み込み、整形し、最終的に文字列として返す」というところには変わりありません。
+
+そう考えると、難しいものではないと思いますし、皆さんも少し手間をかければ作るのは難しくないのではないでしょうか。
+余裕のある方は、是非Djangoのテンプレートエンジンなどを参考にして、同様の機能を一部実装してみてください。
 
