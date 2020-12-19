@@ -4,14 +4,15 @@ from pprint import pformat
 
 from henango.http.request import HTTPRequest
 from henango.http.response import HTTPResponse
-from henango.templates.renderer import render
+from henango.template.renderer import render
 
 
 def now(request: HTTPRequest) -> HTTPResponse:
     """
     現在時刻を表示するHTMLを生成する
     """
-    body = render("now", now=datetime.now())
+    context = {"now": datetime.now()}
+    body = render("now", context)
 
     return HTTPResponse(body=body)
 
@@ -20,9 +21,8 @@ def show_request(request: HTTPRequest) -> HTTPResponse:
     """
     HTTPリクエストの内容を表示するHTMLを生成する
     """
-    body = render(
-        "show_request", request=request, headers=pformat(request.headers), body=request.body.decode("utf-8", "ignore")
-    )
+    context = {"request": request, "headers": pformat(request.headers), "body": request.body.decode("utf-8", "ignore")}
+    body = render("show_request", context)
 
     return HTTPResponse(body=body)
 
@@ -39,15 +39,15 @@ def parameters(request: HTTPRequest) -> HTTPResponse:
         return HTTPResponse(body=body, status_code=405)
 
     elif request.method == "POST":
-        post_params = urllib.parse.parse_qs(request.body.decode())
-        body = render("parameters", params=pformat(post_params))
+        context = {"params": urllib.parse.parse_qs(request.body.decode())}
+        body = render("parameters", context)
 
         return HTTPResponse(body=body)
 
 
 def user_profile(request: HTTPRequest) -> HTTPResponse:
-    user_id = request.params["user_id"]
+    context = {"user_id": request.params["user_id"]}
 
-    body = render("user_profile", user_id=user_id)
+    body = render("user_profile", context)
 
     return HTTPResponse(body=body)
