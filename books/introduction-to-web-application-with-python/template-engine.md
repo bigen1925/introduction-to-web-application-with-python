@@ -141,7 +141,77 @@ f-string記法から`.format()`メソッドへ切り替えていくにあたっ�
 
 それがこちらです。
 
-**`study/vies.py``**
+**`study/henango/template/renderer.py`**
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter19-2/henango/template/renderer.py
+
+**`study/vies.py`**
 https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter19-2/views.py
 
-**`study/henango/templates/renderer.py`**
+`henango`の中に`template`というディレクトリを作り、そこにHTMLの構築に関する共通機能をいれることにしました
+
+## 解説
+### `study/henango/template/renderer.py`
+```python
+def render(template_path: str, context: dict):
+    with open(template_path) as f:
+        template = f.read()
+
+    return template.format(**context)
+
+```
+
+こちらはview関数の中でやっていたことをそのまま持ってきただけなので、とくに解説することもないでしょう。
+
+### `study/views.py`
+#### 15-16行目
+```python
+    context = {"now": datetime.now()}
+    html = render("./templates/now.html", context)
+```
+
+ファイルがどうとかwithがこうとか、わずらわしいことは全て`render()`関数に隠蔽し、テンプレートファイル名とパラメータを渡すだけでよくなりました。
+
+ちなみに、パラメータはdjangoに倣って辞書で渡すことにしました。
+
+行数でいうとたった1行減っただけですが、私はかなりスッキリしたように感じます。
+
+## 動作確認
+しつこいようですが、動作確認はこまめにやりましょう。
+サーバーを再起動したらブラウザで `http://localhost:8080/now` へアクセスし、表示を確認しておいてください。
+
+# STEP3: テンプレートファイルの置き場を設定値で変えられるようにする
+ところで、雛形となるHTMLファイル（以下、テンプレートファイルと呼びます）の置き場は独断で`study/templates/`の下にまとめておくことにしましたが、この置き場所はプロジェクトによって変更したくなることがあるでしょう。
+`static`ディレクトリのときと同様に、`settings`に設定値を切り出すことで、フレームワークに手をいれなくても簡単に変えられるようにしておきましょう。
+
+## ソースコード
+それがこちらです。
+**`study/henango/template/renderer.py`**
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter19-3/henango/template/renderer.py
+
+**`study/settings.py`**
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter19-3/settings.py
+
+**`study/vies.py`**
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter19-3/views.py
+
+
+## 解説
+### `study/henango/template/renderer.py`
+#### 6-13行目
+```python
+def render(template_name: str, context: dict):
+    template_path = os.path.join(settings.TEMPLATES_DIR, template_name)
+
+    with open(template_path) as f:
+        template = f.read()
+```
+
+まず、テンプレートファイルのディレクトリをsettingsに記載した`TEMPLATES_DIR`から取得するように変更しています。
+
+
+### `study/vies.py`
+```python
+    context = {"now": datetime.now()}
+    html = render("now", context)
+```
+

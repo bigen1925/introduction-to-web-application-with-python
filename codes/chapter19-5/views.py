@@ -13,7 +13,7 @@ def now(request: HTTPRequest) -> HTTPResponse:
     現在時刻を表示するHTMLを生成する
     """
     context = {"now": datetime.now()}
-    body = render("now", context)
+    body = render("now.html", context)
 
     return HTTPResponse(body=body)
 

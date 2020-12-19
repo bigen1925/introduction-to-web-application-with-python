@@ -12,7 +12,7 @@ def now(request: HTTPRequest) -> HTTPResponse:
     現在時刻を表示するHTMLを生成する
     """
     context = {"now": datetime.now()}
-    body = render("now", context)
+    body = render("now.html", context)
 
     return HTTPResponse(body=body)
 
@@ -22,7 +22,7 @@ def show_request(request: HTTPRequest) -> HTTPResponse:
     HTTPリクエストの内容を表示するHTMLを生成する
     """
     context = {"request": request, "headers": pformat(request.headers), "body": request.body.decode("utf-8", "ignore")}
-    body = render("show_request", context)
+    body = render("show_request.html", context)
 
     return HTTPResponse(body=body)
 
@@ -40,7 +40,7 @@ def parameters(request: HTTPRequest) -> HTTPResponse:
 
     elif request.method == "POST":
         context = {"params": urllib.parse.parse_qs(request.body.decode())}
-        body = render("parameters", context)
+        body = render("parameters.html", context)
 
         return HTTPResponse(body=body)
 
@@ -48,6 +48,6 @@ def parameters(request: HTTPRequest) -> HTTPResponse:
 def user_profile(request: HTTPRequest) -> HTTPResponse:
     context = {"user_id": request.params["user_id"]}
 
-    body = render("user_profile", context)
+    body = render("user_profile.html", context)
 
     return HTTPResponse(body=body)
