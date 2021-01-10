@@ -23,6 +23,7 @@ class Worker(Thread):
     # ステータスコードとステータスラインの対応
     STATUS_LINES = {
         200: "200 OK",
+        302: "302 Found",
         404: "404 Not Found",
         405: "405 Method Not Allowed",
     }
@@ -124,11 +125,12 @@ class Worker(Thread):
             # pathから拡張子を取得
             if "." in request.path:
                 ext = request.path.rsplit(".", maxsplit=1)[-1]
+                # 拡張子からMIME Typeを取得
+                # 知らない対応していない拡張子の場合はoctet-streamとする
+                response.content_type = self.MIME_TYPES.get(ext, "application/octet-stream")
             else:
-                ext = ""
-            # 拡張子からMIME Typeを取得
-            # 知らない対応していない拡張子の場合はoctet-streamとする
-            response.content_type = self.MIME_TYPES.get(ext, "application/octet-stream")
+                # pathに拡張子がない場合はhtml扱いとする
+                response.content_type = "text/html; charset=UTF-8"
 
         response_header = ""
         response_header += f"Date: {datetime.utcnow().strftime('%a, %d %b %Y %H:%M:%S GMT')}\r\n"
@@ -136,5 +138,8 @@ class Worker(Thread):
         response_header += f"Content-Length: {len(response.body)}\r\n"
         response_header += "Connection: Close\r\n"
         response_header += f"Content-Type: {response.content_type}\r\n"
+
+        for header_name, header_value in response.headers.items():
+            response_header += f"{header_name}: {header_value}\r\n"
 
         return response_header

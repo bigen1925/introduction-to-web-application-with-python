@@ -257,7 +257,7 @@ https://github.com/bigen1925/introduction-to-web-application-with-python/blob/ma
 
 ## 解説
 ### `study/henango/server/worker.py`
-#### 66-68行目
+#### 60-62行目
 ```python
             # レスポンスボディを変換
             if isinstance(response.body, str):

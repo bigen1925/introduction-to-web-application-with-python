@@ -57,15 +57,15 @@ class Worker(Thread):
             # レスポンスを生成する
             response = view(request)
 
+            # レスポンスボディを変換
+            if isinstance(response.body, str):
+                response.body = response.body.encode()
+
             # レスポンスラインを生成
             response_line = self.build_response_line(response)
 
             # レスポンスヘッダーを生成
             response_header = self.build_response_header(response, request)
-
-            # レスポンスボディを変換
-            if isinstance(response.body, str):
-                response.body = response.body.encode()
 
             # レスポンス全体を生成する
             response_bytes = (response_line + response_header + "\r\n").encode() + response.body

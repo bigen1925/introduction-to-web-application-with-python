@@ -23,6 +23,7 @@ class Worker(Thread):
     # ステータスコードとステータスラインの対応
     STATUS_LINES = {
         200: "200 OK",
+        302: "302 Found",
         404: "404 Not Found",
         405: "405 Method Not Allowed",
     }
@@ -105,7 +106,18 @@ class Worker(Thread):
             key, value = re.split(r": *", header_row, maxsplit=1)
             headers[key] = value
 
-        return HTTPRequest(method=method, path=path, http_version=http_version, headers=headers, body=request_body)
+        cookies = {}
+        if "Cookie" in headers:
+            # str から list へ変換 (ex) "name1=value1; name2=value2" => ["name1=value1", "name2=value2"]
+            cookie_strings = headers["Cookie"].split("; ")
+            # list から dict へ変換 (ex) ["name1=value1", "name2=value2"] => {"name1": "value1", "name2": "value2"}
+            for cookie_string in cookie_strings:
+                name, value = cookie_string.split("=", maxsplit=1)
+                cookies[name] = value
+
+        return HTTPRequest(
+            method=method, path=path, http_version=http_version, headers=headers, cookies=cookies, body=request_body
+        )
 
     def build_response_line(self, response: HTTPResponse) -> str:
         """
@@ -124,11 +136,12 @@ class Worker(Thread):
             # pathから拡張子を取得
             if "." in request.path:
                 ext = request.path.rsplit(".", maxsplit=1)[-1]
+                # 拡張子からMIME Typeを取得
+                # 知らない対応していない拡張子の場合はoctet-streamとする
+                response.content_type = self.MIME_TYPES.get(ext, "application/octet-stream")
             else:
-                ext = ""
-            # 拡張子からMIME Typeを取得
-            # 知らない対応していない拡張子の場合はoctet-streamとする
-            response.content_type = self.MIME_TYPES.get(ext, "application/octet-stream")
+                # pathに拡張子がない場合はhtml扱いとする
+                response.content_type = "text/html; charset=UTF-8"
 
         response_header = ""
         response_header += f"Date: {datetime.utcnow().strftime('%a, %d %b %Y %H:%M:%S GMT')}\r\n"
@@ -137,4 +150,11 @@ class Worker(Thread):
         response_header += "Connection: Close\r\n"
         response_header += f"Content-Type: {response.content_type}\r\n"
 
+        for cookie_name, cookie_value in response.cookies.items():
+            response_header += f"Set-Cookie: {cookie_name}={cookie_value}\r\n"
+
+        for header_name, header_value in response.headers.items():
+            response_header += f"{header_name}: {header_value}\r\n"
+
         return response_header
+
