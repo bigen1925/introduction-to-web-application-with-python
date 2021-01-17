@@ -9,6 +9,6 @@
   "author": "bigen1925@gmail.com",
   "license": "MIT",
   "dependencies": {
-    "zenn-cli": "^0.1.52"
+    "zenn-cli": "^0.1.69"
   }
 }
