@@ -25,7 +25,7 @@ class TCPServer:
             # 外部からの接続を待ち、接続があったらコネクションを確立する
             print("=== クライアントからの接続を待ちます ===")
             (client_socket, address) = server_socket.accept()
-            print(f"=== クライアントとの接続が完了しました remote_address: {address} ===")
+            print("=== クライアントとの接続が完了しました remote_address: {address} ===")
 
             # クライアントから送られてきたデータを取得する
             request = client_socket.recv(4096)
