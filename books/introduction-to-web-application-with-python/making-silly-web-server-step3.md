@@ -108,7 +108,7 @@ Accept-Language: ja-JP,ja;q=0.9,en-US;q=0.8,en;q=0.7
 ![](https://storage.googleapis.com/zenn-user-upload/nrewexbi23p51z3kyb4q12ihaycs)
 
 ::: message
-今回の実験では、TCPクライアントはポート**80番**へリクエストを送ることに注意してください。
+今回の実験では、TCPクライアントはポート **80番** へリクエストを送ることに注意してください。
 前章の実験では、私たちの自作サーバー（8080番を見張っている）にリクエストを送信していたのに対し、今回の実験ではApache(80番を見張っている)にリクエストしたいからです。
 ![](https://storage.googleapis.com/zenn-user-upload/4qk43opw6ws6x2fatddfvk12si3e)
 :::

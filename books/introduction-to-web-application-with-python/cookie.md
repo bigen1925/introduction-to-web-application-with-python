@@ -32,7 +32,7 @@ Cookieとは、主にサーバーからブラウザに対して送信され^[Jav
 このCookieの仕組みを使うことで、Webサーバーはクライアントが以前にどのような行動をしていたのかをある程度トラッキングすることができます。
 
 
-ただし、**ブラウザはCookieを常に送り返してくれると限らない**ということに注意してください。
+ただし、 **ブラウザはCookieを常に送り返してくれると限らない** ということに注意してください。
 これらの条件や仕様については後ほど詳細に説明します。
 
 ------
@@ -174,7 +174,7 @@ RFC(draft): https://tools.ietf.org/html/draft-west-first-party-cookies-07
 - **Strict**: 過去にサイトBから付与されたCookieは、サイトBへは送信されません 
 
 となります。
-これは**CSRF**という脆弱性をある程度防ぐための機能です。
+これは **CSRF** という脆弱性をある程度防ぐための機能です。
 
 自分の作っているWebサイトで、外部サイトを経由すると何故かCookieがうまく使えない（よくあるのは、ログアウトされてしまうなど）という事象が発生したら、この属性をチェックしてみてください。
 
@@ -195,7 +195,7 @@ RFC: https://triple-underscore.github.io/http-cookie-ja.html#set-cookie
 
 ブラウザがSet-Cookieヘッダを受け取った場合、どのように処理しなければならないかが書かれています。
 
->UA は、 HTTP 応答にて受信した Set-Cookie ヘッダを，**まるごと無視してもよい。** 例えば UA は、 “第三者主体” への要請に対する応答による，クッキーの設定に対し、阻止したいと望むかもしれない（ § 第三者主体クッキーを見よ）。
+>UA は、 HTTP 応答にて受信した Set-Cookie ヘッダを， **まるごと無視してもよい。**  例えば UA は、 “第三者主体” への要請に対する応答による，クッキーの設定に対し、阻止したいと望むかもしれない（ § 第三者主体クッキーを見よ）。
 UA は Set-Cookie ヘッダをまるごと無視しない場合、以下で定義されるように， Set-Cookie ヘッダの値を set-cookie-string として構文解析しなければならない。
 
 ここで重要なのは、ここまで見てきたようなサーバー側からのCookieの使用制限とは別に、そもそもブラウザは独自の判断で勝手にCookieを無視してよい、ということです。
@@ -588,7 +588,7 @@ HTTP/1.1 200 OK
 Set-Cookie: username=bigen
 Set-Cookie: email=bigen@example.com
 ```
-のように、*Set-Cookie*ヘッダーを**複数記述しなければなりません**。
+のように、*Set-Cookie*ヘッダーを **複数記述しなければなりません** 。
 
 しかし、今の`HTTPResponse`オブジェクトの`headers`は`dict`型になっており、同じキーの値を複数いれることはできません。
 
@@ -914,7 +914,7 @@ response.set_cookie("username", username, max_age=30)
 `http://localhost:8080/login`
 へアクセスし、フォームを入力して送信してみましょう。
 
-すると`/welcome`ページへリダイレクトされると思いますので、**検証ツール → Network**から`/login`へアクセスしたときのレスポンスを確認してみましょう。
+すると`/welcome`ページへリダイレクトされると思いますので、 **検証ツール → Network** から`/login`へアクセスしたときのレスポンスを確認してみましょう。
 *Response Headers*を見てみると、*Set-Cookie*ヘッダに*Max-Age*属性が付与されていることが確認できると思います。
 
 ![](https://storage.googleapis.com/zenn-user-upload/sa8yf8whsmo4dxtztvf3ibtngwmi)
