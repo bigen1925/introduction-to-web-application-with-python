@@ -69,7 +69,7 @@ Content-Typeを少し変更しています。
 
 エンコーディングについては話が込み入ってしまいますので、ピンと来ない方はおなじないだと思って追記しておいてください。
 
-このファイルは **`static`ディレクトリの中に入っており静的ファイル配信の対象となります** ので、サーバーを起動した状態でChromeから `http://localhsot:8080/form.html` へアクセスすると表示することができます。
+このファイルは **`static`ディレクトリの中に入っており静的ファイル配信の対象となります** ので、サーバーを起動した状態でChromeから `http://localhost:8080/form.html` へアクセスすると表示することができます。
 
 ![](https://storage.googleapis.com/zenn-user-upload/10tw1udmnxex3mayh325zn0az6cj)
 

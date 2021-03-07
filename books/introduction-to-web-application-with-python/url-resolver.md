@@ -16,9 +16,6 @@ title: "URLパラメータを受け取れるようにする"
 - URLパラメータ
 - テンプレートエンジン
 - Cookie
-- Session
-- Middleware
-- Database連携
 
 などがあります。
 

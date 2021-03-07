@@ -4,8 +4,8 @@ title: "Cookieを扱う"
 
 # Cookieとは
 
-本章では、現代のWeb技術では理解が欠かせない`Cookie`について取り扱っていきます。
-本章のボリュームはかなり多くなっていますが、重要な機能ですのでぜひ最後まで読んでマスターしておいてください。 
+本書の締めくくりとして、本章では現代のWeb技術では理解が欠かせない`Cookie`について取り扱っていきます。
+ボリュームはかなり多くなっていますが、重要な機能ですのでぜひ最後まで読んでマスターしておいてください。 
  
   
 Cookieとは、主にサーバーからブラウザに対して送信され^[Javascriptを使うことでブラウザサイドでCookieを生成することも可能ですが、簡単のために本書ではサーバーサイドから送信される場合のみを扱います]、ブラウザ内で保存される小さな文字列データのことです。
@@ -875,7 +875,7 @@ class HTTPResponse:
             if cookie.secure:
                 cookie_header += "; Secure"
             if cookie.http_only:
-                cookie_header += "; Http-Only"
+                cookie_header += "; HttpOnly"
 
             response_header += cookie_header + "\r\n"
 ```

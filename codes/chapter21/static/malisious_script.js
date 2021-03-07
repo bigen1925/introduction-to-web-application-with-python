@@ -1,1 +1,0 @@
-alert('このサイトで使われているCookieを盗みとりました。\n' + document.cookie);

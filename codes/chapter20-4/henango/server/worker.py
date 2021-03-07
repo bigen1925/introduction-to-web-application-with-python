@@ -165,7 +165,7 @@ class Worker(Thread):
             if cookie.secure:
                 cookie_header += "; Secure"
             if cookie.http_only:
-                cookie_header += "; Http-Only"
+                cookie_header += "; HttpOnly"
 
             response_header += cookie_header + "\r\n"
 
