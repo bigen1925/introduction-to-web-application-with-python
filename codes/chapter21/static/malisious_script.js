@@ -1,1 +1,1 @@
-alert('このサイトで使われているCookie: ' + document.cookie + 'を盗みとりました')
+alert('このサイトで使われているCookieを盗みとりました。\n' + document.cookie);

@@ -18,6 +18,7 @@ class Worker(Thread):
         "png": "image/png",
         "jpg": "image/jpg",
         "gif": "image/gif",
+        "js": "application/javascript"
     }
 
     # ステータスコードとステータスラインの対応
