@@ -53,7 +53,7 @@ chapters:
   - url-resolver.md
   - template-engine.md
   - cookie.md
-  - draft5.md
+  - session.md
   - draft6.md
   - draft7.md
   - router.md
