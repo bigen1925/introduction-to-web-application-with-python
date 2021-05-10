@@ -55,7 +55,7 @@ def now(request: HTTPRequest) -> HTTPResponse:
 ## ソースコード
 
 
-**`study/vies.py`**
+**`study/views.py`**
 https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter19/views.py
 
 **`study/templates/now.html`**
@@ -64,7 +64,7 @@ https://github.com/bigen1925/introduction-to-web-application-with-python/blob/ma
 レスポンスの雛形となるhtmlファイルは、新たに`templates`というディレクトリを作り、そこの中にまとめることにしました。
 
 ## 解説
-### `study/vies.py`
+### `study/views.py`
 #### 14-16行目
 ```python
     with open("./template/now.html") as f:
@@ -144,7 +144,7 @@ f-string記法から`.format()`メソッドへ切り替えていくにあたっ�
 **`study/henango/template/renderer.py`**
 https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter19-2/henango/template/renderer.py
 
-**`study/vies.py`**
+**`study/views.py`**
 https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter19-2/views.py
 
 `henango`の中に`template`というディレクトリを作り、そこにHTMLの構築に関する共通機能をいれることにしました
@@ -191,7 +191,7 @@ https://github.com/bigen1925/introduction-to-web-application-with-python/blob/ma
 **`study/settings.py`**
 https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter19-3/settings.py
 
-**`study/vies.py`**
+**`study/views.py`**
 https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter19-3/views.py
 
 
@@ -209,7 +209,7 @@ def render(template_name: str, context: dict):
 テンプレートファイルのディレクトリをsettingsに記載した`TEMPLATES_DIR`から取得するように変更しています。
 
 
-### `study/vies.py`
+### `study/views.py`
 #### 16行目
 ```python
     html = render("now.html", context)

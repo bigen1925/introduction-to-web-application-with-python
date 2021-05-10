@@ -271,13 +271,13 @@ pathから拡張子(=`ext`)を取得し、拡張子と先ほど定義した辞�
 ちなみに、
 `path.rsplit(".", maxsplit=1)[-1]`
 は、pathを`.`で右から1回だけ分割し、得られたリストの-1番目(= 最後尾)を取得しています。
-`.`が含まれない（=要素数が1になってしまう）パターンは事前に除外しては除外していますので、今回に限っては
+`.`が含まれない（=要素数が1になってしまう）パターンは事前に除外していますので、今回に限っては
 `path.rsplit(".", maxsplit=1)[1]`
 と同じ意味になります。
 
 ### 104行目
 ```python
-                    response_header += f"Content-Type: {mime_type}\r\n"
+                    response_header += f"Content-Type: {content_type}\r\n"
 ```
 
 忘れずに`Content-Type`ヘッダーを変数を使って生成するよう変更しておきましょう。

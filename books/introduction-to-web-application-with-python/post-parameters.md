@@ -39,7 +39,7 @@ HTMLファイルを新規に作成してください。
 `static`ディレクトリ内に作成しなければいけないので注意してください。
 
 ### `study/workerthread.py`
-#### 22, 67, 92, 112行目
+#### 20, 66, 91, 111行目
 ```python
         "html": "text/html; charset=UTF-8",
 ```

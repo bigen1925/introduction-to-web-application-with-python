@@ -91,7 +91,7 @@ URL_VIEW = {
     "/user/<user_id>/profile": views.user_profile,
 }
 ```
-動作確認用のサンプルとして、URLパラメータを含むのパスを追加しました
+動作確認用のサンプルとして、URLパラメータを含むパスを追加しました
 
 ### `study/views.py`
 #### 80-94行目
@@ -399,7 +399,7 @@ https://github.com/bigen1925/introduction-to-web-application-with-python/blob/ma
 https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter18-4/henango/urls/resolver.py
 
 **`study/henango/server/worker.py`**
-https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter18-3/henango/server/worker.py
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter18-4/henango/server/worker.py
 
 ## 解説
 ### `study/henango/views/static.py`
