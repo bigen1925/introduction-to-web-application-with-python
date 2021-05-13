@@ -240,7 +240,7 @@ https://github.com/bigen1925/introduction-to-web-application-with-python/blob/ma
 
 ## 解説
 
-### `study/henango/server/HTTPResponse.py`
+### `study/henango/http/response.py`
 #### 4-23行目
 
 ```python
