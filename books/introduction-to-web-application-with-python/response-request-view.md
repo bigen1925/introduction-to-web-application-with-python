@@ -439,7 +439,7 @@ view関数の引数と返り値の型を変更しています。
 
 これまで、引数は`method, path, http_version, request_header, request_body`の5つの値を受け取っていましたが、`HTTPRequest`型の`request`というパラメータを1つだけ受け取るようにしました。
 
-また、返り値は`response_body, content_type, response_line`という3つの値を返していましたが、`HTTPRequest`型の値を1つだけ返すようにしました。
+また、返り値は`response_body, content_type, response_line`という3つの値を返していましたが、`HTTPResponse`型の値を1つだけ返すようにしました。
 ここで注意してほしいのは、これまでresponse_lineという形で`status_code`以外にも`reason phrase`や`http_version`の情報も返していましたが、今回から`status_code`のみを返すようにResponseクラスを作っています。
 
 これは、viewクラスはあくまで「動的なレスポンスの内容を生成する」ことだけに専念させ、HTTPのルールや慣習は極力扱わせないようにするためです。
