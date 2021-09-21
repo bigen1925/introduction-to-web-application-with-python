@@ -57,7 +57,7 @@ URLパターンの扱い方は、
 - URLパラメータのパターン指定の方法
 →　`/user/<user_id>/profile`と書くのか、`/user/:user_id/profile`と書くのか
 - パラメータへのアクセスの仕方
-→　`request.params["user_id]`でアクセスできるのか、view関数の第2引数として渡されてくる(`def user(request, user_id):`となる)のか
+→　`request.params["user_id"]`でアクセスできるのか、view関数の第2引数として渡されてくる(`def user(request, user_id):`となる)のか
 
 などの観点でフレームワークごとに特色があります。
 
