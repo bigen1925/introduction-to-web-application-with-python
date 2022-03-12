@@ -79,7 +79,7 @@ if __name__ == '__main__':
 https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter8/tcpserver.py
 
 変わったのは36~41行目です。
-::: messages
+::: message
 Zennではソースコードに行番号が表示されませんので、行数で場所が分からない方はgithubのソースコードも併せて参照してください。
 :::
 
