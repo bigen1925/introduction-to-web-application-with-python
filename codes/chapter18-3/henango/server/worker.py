@@ -10,7 +10,6 @@ import settings
 from henango.http.request import HTTPRequest
 from henango.http.response import HTTPResponse
 from henango.urls.resolver import URLResolver
-from urls import url_patterns
 
 
 class Worker(Thread):
