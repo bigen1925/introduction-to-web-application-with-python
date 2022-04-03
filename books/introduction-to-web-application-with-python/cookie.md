@@ -454,7 +454,7 @@ url_patterns = [
 
 formの`action`属性を指定していないので、フォームは`/login`へPOSTされます。
 
-###`study/templates/welcome.html`
+### `study/templates/welcome.html`
 ```html
 <html>
 <body>
