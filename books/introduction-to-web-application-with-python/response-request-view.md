@@ -274,7 +274,7 @@ pythonでは **全てのオブジェクトが第一級オブジェクト** で�
 このように、「それが具体的なモノの中から、共通な性質の一部だけを抜き出すことで、具体的なモノを扱わなくてすむようにする」ことを **抽象化する** と呼び、プログラミングにおいては非常に重要なテクニックとなります。
 
 今回でいうと、`now()` `show_rewuest()` `parameters`といった具体的な関数から、インターフェースを統一することで
-「`method, path, http_version, request_header, request_body`という5つの引数を受け取り、`response_body, response_line`という2つの値を返す」
+「`method, path, http_version, request_header, request_body`という5つの引数を受け取り、`response_body, content_type, response_line`という3つの値を返す」
 という性質だけを抜き出す(=抽象化する)ことで、呼び出す側は
 「具体的に何関数かしらないけど、5つの引数を与えて呼び出す」
 というように扱えるようにしたということです。
