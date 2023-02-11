@@ -26,7 +26,7 @@ POSTリクエストをブラウザがどのようなときに送るかという�
 https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter15/static/form.html
 
 **`study/workerthread.py`**
-https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter15/workerthread.py#L169
+https://github.com/bigen1925/introduction-to-web-application-with-python/blob/main/codes/chapter15/workerthread.py
 
 ## 解説
 ### `study/static/form.html`
