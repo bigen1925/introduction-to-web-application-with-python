@@ -81,7 +81,7 @@ https://github.com/bigen1925/introduction-to-web-application-with-python
 
 
 # 筆者について
-連絡先: https://twitter.com/bigen_1925
+連絡先: [Twitter](https://twitter.com/KasaiMitsuru)
 
 ぺーぺーのエンジニアです。
 
